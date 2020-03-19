@@ -30,8 +30,13 @@
                     </mat-select>
                   </mat-form-field>
 
+                <div fxLayout="row" fxLayoutAlign="end end">
                   <div class="parti-button">
+                    <button mat-raised-button color="accent" class="discard-btn" (click)="onEmpty($event)">Empty</button>
+                </div>
+                <div class="parti-button">
                     <button mat-raised-button color="primary" class="invite-btn" (click)="onInvite($event)">Invite</button>
+                </div>
                 </div>
             </mat-card>
 

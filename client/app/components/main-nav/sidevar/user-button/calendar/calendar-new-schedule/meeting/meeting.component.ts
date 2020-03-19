@@ -6,8 +6,7 @@ import { FormControl } from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 
 interface departments {
-  value: number;
-  viewValue: string;
+  viewValue: any;
 }
 
 interface userList {
@@ -27,10 +26,10 @@ export class MeetingComponent implements OnInit {
   filteredOptions: Observable<User>;
   people: any[] = [];
   departments = [
-    {value: 0, viewValue: ''},
-    {value: 1, viewValue: 'Web Development'},
-    {value: 2, viewValue: 'Project Management'},
-    {value: 3, viewValue: 'Data Analyst'}
+    // {viewValue: ''}
+    // {value: 1, viewValue: 'Web Development'},
+    // {value: 2, viewValue: 'Project Management'},
+    // {value: 3, viewValue: 'Data Analyst'}
   ];
   selectedPeople: any;
   personName: string = '';
@@ -42,8 +41,6 @@ export class MeetingComponent implements OnInit {
   ngOnInit(): void {
     this.users = this.UserSerivce.getUsers();
 
-    console.log(this.users);
-
     this.userList = this.users.map(user => {
       return {
       name: user.personalInfo.firstName + " " + user.personalInfo.lastName,
@@ -51,15 +48,21 @@ export class MeetingComponent implements OnInit {
       }
     });
 
-    console.log(this.userList);
-
     const departmentList = this.userList.map(user => {
       return {
         viewValue: user.department
       }
     })
 
-    console.log(departmentList);
+    const uniqueDepartmentList = [... new Set(departmentList.map(dp => dp.viewValue))];
+
+    const customUniqueDptList = uniqueDepartmentList.map(dp => {
+      return {
+        viewValue: dp
+      }
+    })
+
+    customUniqueDptList.map(data => this.departments.push(data));
 
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -96,6 +99,11 @@ export class MeetingComponent implements OnInit {
 
   }
 
+  onEmpty(event: any) {
+    this.departmentName = '';
+    this.personName = '';
+  }
+
 
   onDiscard(index: number) {
     return this.people.splice(index, 1);
@@ -105,6 +113,9 @@ export class MeetingComponent implements OnInit {
     if (this.people.some(element => element === this.personName || element === this.departmentName)) {
       return alert('The inserted participant already exists.')
     }
+
+    if (this.personName && !this.userList.some(x => x.name === this.personName)) return alert('The user name does not exist.');
+
     return true;
   }
 
