@@ -9,6 +9,7 @@ import { ChartsModule } from 'ng2-charts';
 
 // Material
 import { MaterialModule } from './material/material.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -116,6 +117,7 @@ import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinne
 
     // Material
     MaterialModule,
+    NgxMaterialTimepickerModule,
 
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],

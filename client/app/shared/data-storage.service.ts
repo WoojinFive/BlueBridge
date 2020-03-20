@@ -90,4 +90,11 @@ export class DataStorageService {
     );
   }
 
+  addNewSchedule(schedule) {
+    const newSchedule = schedule;
+    this.http.post('http://localhost:3000/api/schedules', newSchedule).subscribe(() => {
+      this.fetchSchedule().subscribe();
+    });
+  }
+
 }

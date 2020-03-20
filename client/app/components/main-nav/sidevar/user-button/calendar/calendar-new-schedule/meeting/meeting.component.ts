@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../../../../shared/user.model';
 import { UserService } from '../../../../../../../shared/user.service';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
+import { DataStorageService } from 'client/app/shared/data-storage.service';
 
 interface departments {
   viewValue: any;
@@ -34,9 +35,15 @@ export class MeetingComponent implements OnInit {
   selectedPeople: any;
   personName: string = '';
   departmentName: string = '';
+  input_title: string;
+  input_description: string;
+  input_date: any;
+  input_time: any;
+  input_where: string;
 
 
-  constructor(private UserSerivce: UserService) { }
+
+  constructor(private UserSerivce: UserService, private DataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
     this.users = this.UserSerivce.getUsers();
@@ -117,6 +124,30 @@ export class MeetingComponent implements OnInit {
     if (this.personName && !this.userList.some(x => x.name === this.personName)) return alert('The user name does not exist.');
 
     return true;
+  }
+
+  onAddSchedule(form: NgForm) {
+    const type = "meeting";
+    const user = this.people;
+    const startDate = form.value.input_date;
+    const endDate = form.value.input_date;
+    const time = form.value.input_time;
+    const isApproved = true;
+    const title = form.value.input_title;
+    const add_description = form.value.input_description;
+
+    const newSchedule = {
+      type: type,
+      user: user,
+      startDate: new Date(startDate + time),
+      endDate: new Date(endDate + time),
+      isApproved: isApproved,
+      title: title,
+      description: add_description
+    };
+
+    form.reset();
+    this.DataStorageService.addNewSchedule(newSchedule);
   }
 
 }
