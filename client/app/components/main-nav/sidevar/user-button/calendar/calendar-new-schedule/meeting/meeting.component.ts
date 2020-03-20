@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../../../../shared/user.model';
 import { UserService } from '../../../../../../../shared/user.service';
+import { ThemePalette } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { FormControl, NgForm } from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
@@ -21,11 +22,22 @@ interface userList {
   styleUrls: ['./meeting.component.css']
 })
 export class MeetingComponent implements OnInit {
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  public stepHour = 1;
+  public stepMinute = 1;
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+
   users: any;
   userList: any;
   myControl = new FormControl();
   filteredOptions: Observable<User>;
   people: any[] = [];
+  objectIdPeople: any[] = [];
   departments = [
     // {viewValue: ''}
     // {value: 1, viewValue: 'Web Development'},
@@ -106,6 +118,24 @@ export class MeetingComponent implements OnInit {
 
   }
 
+  changeNameToObjectId(peopleArray) {
+    const peopleList = peopleArray.map(person => {
+      return this.users.filter(userData => {
+        if (person === userData.personalInfo.firstName + ' ' + userData.personalInfo.lastName) {
+          return userData._id
+        }
+      })
+    })
+
+    let finalList = [];
+
+    peopleList.map(person => {
+      return finalList.push(person[0]._id)
+    })
+
+    return finalList;
+  }
+
   onEmpty(event: any) {
     this.departmentName = '';
     this.personName = '';
@@ -128,19 +158,20 @@ export class MeetingComponent implements OnInit {
 
   onAddSchedule(form: NgForm) {
     const type = "meeting";
-    const user = this.people;
+    const user = this.changeNameToObjectId(this.people);
     const startDate = form.value.input_date;
     const endDate = form.value.input_date;
-    const time = form.value.input_time;
     const isApproved = true;
     const title = form.value.input_title;
     const add_description = form.value.input_description;
 
+    console.log(startDate);
+
     const newSchedule = {
       type: type,
       user: user,
-      startDate: new Date(startDate + time),
-      endDate: new Date(endDate + time),
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
       isApproved: isApproved,
       title: title,
       description: add_description

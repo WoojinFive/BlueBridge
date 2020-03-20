@@ -46,6 +46,8 @@ import { MatTableModule } from '@angular/material/table';
 // Moment
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from "@mat-datetimepicker/core";
+
 @NgModule({
   imports: [
     CommonModule
@@ -95,6 +97,9 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatTableModule,
     // Moment
     MatMomentDateModule,
+
+    MatNativeDatetimeModule,
+    MatDatetimepickerModule
   ]
 })
 export class MaterialModule { }

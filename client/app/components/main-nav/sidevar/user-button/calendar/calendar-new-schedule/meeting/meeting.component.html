@@ -37,10 +37,10 @@
 
                 <div fxLayout="row" fxLayoutAlign="end end">
                   <div class="parti-button">
-                    <button mat-raised-button color="accent" class="discard-btn" (click)="onEmpty($event)">Empty</button>
+                    <button mat-raised-button color="accent" type="button" class="discard-btn" (click)="onEmpty($event)">Empty</button>
                 </div>
                 <div class="parti-button">
-                    <button mat-raised-button color="primary" class="invite-btn" (click)="onInvite($event)">Invite</button>
+                    <button mat-raised-button color="primary" type="button" class="invite-btn" (click)="onInvite($event)">Invite</button>
                 </div>
                 </div>
             </mat-card>
@@ -71,28 +71,18 @@
 
         <mat-form-field appearance="fill" class="where-area">
             <mat-label>Where</mat-label>
-            <input matInput ngModel name="input_where" placeholder="" value="">
+            <input matInput (ngModel)="input_where" name="input_where" placeholder="" value="">
         </mat-form-field>
 
-        <div fxLayout="row" fxLayoutAlign="start start">
-          <div fxFlex="45">
+
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>When do you want to set up this schedule?</mat-label>
-              <input matInput ngModel name="input_date" [matDatepicker]="meetingPicker">
-              <mat-datepicker-toggle matSuffix [for]="meetingPicker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-              <mat-datepicker #meetingPicker></mat-datepicker>
+              <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="meetingPicker">
+              <mat-datetimepicker-toggle matSuffix [for]="meetingPicker" matSuffix>
+              </mat-datetimepicker-toggle>
+              <mat-datetimepicker #meetingPicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
             </mat-form-field>
-          </div>
-
-          <div fxFlex="45">
-              Please select the time: 
-              <input ngModel name="input_time" placeholder="" aria-label="12hr format" [ngxTimepicker]="default" readonly>
-              <ngx-material-timepicker #default></ngx-material-timepicker>
-          </div>
-          
-        </div>      
+     
 
         <p class="apply-btn-p"><button mat-raised-button color="primary" type="submit" class="apply-btn">Apply</button></p>
       </form>

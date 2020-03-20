@@ -5,15 +5,15 @@ const joigoose = require('joigoose')(mongoose);
 Joi.objectId = require('joi-objectid')(Joi);
 
 const joiScheduleSchema = Joi.object({
-      _id: Joi.objectId(),
+      // _id: Joi.objectId(),
       type: Joi.string().required(),
       user: Joi.array().items(Joi.objectId()),
       startDate: Joi.date(),
       endDate: Joi.date(),
       isApproved: Joi.boolean(),
       title: Joi.string(),
-      description: Joi.string()
-})
+      description: Joi.string(),
+}, {versionKey: false})
 
 const mongooseScheduleSchema = joigoose.convert(joiScheduleSchema);
 

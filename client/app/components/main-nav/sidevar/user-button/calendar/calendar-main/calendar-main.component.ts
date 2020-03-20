@@ -90,9 +90,10 @@ export class CalendarMainComponent implements OnInit {
      let editedSchedule;
      let setType;
 
-     if (schedule.type === "meeting") setColor = colors.red, setType = "Meeting";
-     if (schedule.type === "vacation") setColor = colors.blue, setType = "Vacation";
-     if (schedule.type === "event") setColor = colors.yellow, setType = "Event", this.isEvent = true;
+     if (String(schedule.type) === "event") { setColor = colors.yellow, setType = "Event", this.isEvent = true; }
+     else if (String(schedule.type) === "meeting") setColor = colors.red, setType = "Meeting", this.isEvent = false;
+     else if (String(schedule.type) === "vacation") setColor = colors.blue, setType = "Vacation", this.isEvent = false;
+     
 
      editedSchedule = {
        title: schedule.title,
