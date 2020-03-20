@@ -102,22 +102,22 @@ export class MeetingComponent implements OnInit {
       return alert('Please enter a person name or selet a department.')    
     }
 
-    if (this.personName === '' && this.departmentName !== '' && this.participantValidation()) {
+    if (this.personName === '' && this.departmentName !== '') {
       const peopleinDepartment = this.users.filter(user => user.employeeInfo.department === this.departmentName);
       const peopleinDepartList = peopleinDepartment.map(person => person.personalInfo.firstName + ' ' + person.personalInfo.lastName);
 
-      console.log(peopleinDepartList);
-
-      if (confirm(`Total ${peopleinDepartList.length} person(s) in ${this.departmentName} will be added. Do you want to add?`)) {
-        peopleinDepartList.map(person => this.people.push(person));
-        this.departmentName = '';
-      } else {
-        this.departmentName = '';
+      if (this.participantValidation(peopleinDepartList)) {
+        if (confirm(`Total ${peopleinDepartList.length} person(s) in ${this.departmentName} will be added. Do you want to add?`)) {
+          peopleinDepartList.map(person => this.people.push(person));
+          this.departmentName = '';
+        } else {
+          this.departmentName = '';
+        }
       }
 
     }
 
-    if (this.personName !== '' && this.departmentName === '' && this.participantValidation()) {
+    if (this.personName !== '' && this.departmentName === '' && this.participantValidation(this.personName)) {
       this.people.push(this.personName);
       this.personName = '';
     }
@@ -156,14 +156,27 @@ export class MeetingComponent implements OnInit {
     return this.people.splice(index, 1);
   }
 
-  participantValidation() {
-    if (this.people.some(element => element === this.personName || element === this.departmentName)) {
-      return alert('The inserted participant already exists.')
+  participantValidation(people) {
+    if(!Array.isArray(people)) {
+      if (this.people.some(element => element === people)) {
+        return alert('The inserted participant already exists.')
+      }
+      return true;
+    } else {
+      const duplicatedList = [];
+      people.map(person => {
+        if (this.people.some(element => element === person)) {
+          duplicatedList.push(person);
+        }
+      })
+
+      if (duplicatedList.length !== 0) {
+        return alert(`'${duplicatedList}' is(are) in the list. If you want to add this department, please remove the person(s) in the list first.`)
+      }
+
+      return true;
     }
 
-    if (this.personName && !this.userList.some(x => x.name === this.personName)) return alert('The user name does not exist.');
-
-    return true;
   }
 
   onAddSchedule(form: NgForm) {
