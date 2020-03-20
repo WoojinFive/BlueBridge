@@ -103,8 +103,18 @@ export class MeetingComponent implements OnInit {
     }
 
     if (this.personName === '' && this.departmentName !== '' && this.participantValidation()) {
-      this.people.push(this.departmentName);
-      this.departmentName = '';
+      const peopleinDepartment = this.users.filter(user => user.employeeInfo.department === this.departmentName);
+      const peopleinDepartList = peopleinDepartment.map(person => person.personalInfo.firstName + ' ' + person.personalInfo.lastName);
+
+      console.log(peopleinDepartList);
+
+      if (confirm(`Total ${peopleinDepartList.length} person(s) in ${this.departmentName} will be added. Do you want to add?`)) {
+        peopleinDepartList.map(person => this.people.push(person));
+        this.departmentName = '';
+      } else {
+        this.departmentName = '';
+      }
+
     }
 
     if (this.personName !== '' && this.departmentName === '' && this.participantValidation()) {

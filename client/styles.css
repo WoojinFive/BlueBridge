@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins|Raleway|Ubuntu&display=swap');
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
-
 @font-face {
   font-family: "Raleway";
   src: url('/assets/fonts/Raleway/Raleway-Light.ttf') format("truetype");
@@ -16,3 +15,4 @@ body { margin: 0; font-family: "Raleway", "Helvetica Neue", sans-serif; }
 .mat-drawer-container {
   background-color: white;
 }
+

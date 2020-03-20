@@ -77,8 +77,8 @@
 
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>When do you want to set up this schedule?</mat-label>
-              <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="meetingPicker">
-              <mat-datetimepicker-toggle matSuffix [for]="meetingPicker" matSuffix>
+              <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="meetingPicker" required>
+              <mat-datetimepicker-toggle [for]="meetingPicker" matSuffix>
               </mat-datetimepicker-toggle>
               <mat-datetimepicker #meetingPicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
             </mat-form-field>

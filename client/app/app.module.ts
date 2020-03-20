@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -10,6 +10,7 @@ import { ChartsModule } from 'ng2-charts';
 // Material
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -121,7 +122,10 @@ import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinne
 
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'en-EN' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
