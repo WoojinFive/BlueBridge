@@ -4,9 +4,12 @@
       [mode]="(isXSmallAndSmall$ | async) ? 'over' : 'side'"
       [opened]="(isXSmallAndSmall$ | async) === false">
     <app-sidevar-card ></app-sidevar-card>
+    <app-userinfo></app-userinfo>
     <app-user-button></app-user-button>
     <app-admin-button></app-admin-button>
     <app-individual-button></app-individual-button>
+    <app-status-change></app-status-change>
+
   </mat-sidenav>
   <mat-sidenav-content>
     <app-toolbar>
