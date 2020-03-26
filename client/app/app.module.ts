@@ -53,6 +53,8 @@ import { PermissionComponent } from "./components/main-nav/sidevar/admin-button/
 import { PermissionDetailComponent } from "./components/main-nav/sidevar/admin-button/permission/permission-detail/permission-detail.component";
 import { MyInfoComponent } from './components/user-menus/my-info/my-info.component';
 import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-staff/wage-list-of-staff.component';
+import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userinfo.component';
+import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,9 @@ import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-s
     PermissionComponent,
     PermissionDetailComponent,
     MyInfoComponent,
-    WageListOfStaffComponent
+    WageListOfStaffComponent,
+    UserinfoComponent,
+    StatusChangeComponent
   ],
   imports: [
     BrowserModule,
