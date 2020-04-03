@@ -13,6 +13,7 @@ module.exports = function routes(app, root) {
   app.use("/api/users", require("./api/users"));
   app.use("/api/feeds", require("./api/feeds"));
   app.use("/api/schedules", require("./api/schedules"));
+  app.use("/api/notes", require("./api/notes"));
 
   /**
    * Here we can handle all error routes and point them to a component in the components folder

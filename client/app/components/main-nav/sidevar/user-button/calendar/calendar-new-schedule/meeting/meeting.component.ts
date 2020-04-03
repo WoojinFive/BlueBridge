@@ -180,6 +180,10 @@ export class MeetingComponent implements OnInit {
   }
 
   onAddSchedule(form: NgForm) {
+    if (this.people.length === 0) {
+      return alert('You must invite at least one person.')
+    }
+
     const type = "meeting";
     const user = this.changeNameToObjectId(this.people);
     const startDate = form.value.input_date;

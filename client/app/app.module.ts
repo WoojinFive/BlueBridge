@@ -42,7 +42,6 @@ import { NewUserComponent } from './components/main-nav/sidevar/admin-button/new
 import { NoteComponent } from './components/main-nav/sidevar/user-button/note/note.component';
 import { NoteHistoryComponent } from './components/main-nav/sidevar/user-button/note/note-history/note-history.component';
 import { NoteInputComponent } from './components/main-nav/sidevar/user-button/note/note-input/note-input.component';
-import { NoteDatepickerComponent } from './components/main-nav/sidevar/user-button/note/note-datepicker/note-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/main-nav/sidevar/user-button/calendar/calendar.component';
@@ -88,7 +87,6 @@ import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinne
     NoteComponent,
     NoteHistoryComponent,
     NoteInputComponent,
-    NoteDatepickerComponent,
     CalendarComponent,
     CalendarMainComponent,
     ScheduleDetailDialog,
