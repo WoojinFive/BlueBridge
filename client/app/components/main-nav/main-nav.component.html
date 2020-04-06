@@ -33,11 +33,11 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="onStartWork()">
           <mat-icon>power</mat-icon>
           <span>Start Work</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="onFinishWork()">
           <mat-icon>power_off</mat-icon>
           <span>Finish Work</span>
         </button>

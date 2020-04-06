@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Auth } from './auth.model';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
+import { DataStorageService } from '../data-storage.service';
 
 export interface AuthResponseData {
   userID: string;
@@ -20,10 +23,16 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
+  users: User[];
   user = new BehaviorSubject<Auth>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userService: UserService,
+    private dataStorageService: DataStorageService
+  ) {}
 
   signup() {}
 
@@ -82,12 +91,38 @@ export class AuthService {
   }
 
   logout() {
+    // get current login user cookie
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    // add login time in db
+    this.users = this.userService.users;
+    const currentUser = this.users.filter(
+      user => user._id === userData.userID
+    )[0];
+    const date = new Date();
+    const currentDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString();
+
+    const updatedCurrentUser = {
+      ...currentUser,
+      workInfo: {
+        ...currentUser['workInfo'],
+        lastLogoutTime: currentDate
+      },
+      isLogin: false
+    };
+
+    this.dataStorageService.updateUsers(updatedCurrentUser);
+
     this.user.next(null);
-    this.router.navigate(['/signin']);
+
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
+
+    this.router.navigate(['/signin']);
   }
 
   autoLogout(expirationDuration: number) {
@@ -119,5 +154,24 @@ export class AuthService {
     this.user.next(user);
     // this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
+
+    // add login time in db
+    this.users = this.userService.users;
+    const currentUser = this.users.filter(user => user._id === userID)[0];
+    const date = new Date();
+    const currentDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString();
+
+    const updatedCurrentUser = {
+      ...currentUser,
+      workInfo: {
+        ...currentUser['workInfo'],
+        lastLoginTime: currentDate
+      },
+      isLogin: true
+    };
+
+    this.dataStorageService.updateUsers(updatedCurrentUser);
   }
 }

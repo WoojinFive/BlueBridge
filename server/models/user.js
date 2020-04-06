@@ -6,7 +6,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 // const Schema = mongoose.Schema;
 
 const joiUserSchema = Joi.object({
-  _id: Joi.objectId().required(),
+  // _id: Joi.objectId().required(),
   personalInfo: {
     email: Joi.string()
       .email()
@@ -26,18 +26,18 @@ const joiUserSchema = Joi.object({
     department: Joi.string(),
     position: Joi.string(),
     hourlyWage: Joi.number(),
-    roles: Joi.array().items(Joi.objectId()),
-    workInfo: {
-      lastLoginTime: Joi.date(),
-      lastLogoutTime: Joi.date(),
-      workTime: [
-        {
-          date: Joi.date(),
-          workStartTime: Joi.date(),
-          workFinishTime: Joi.date()
-        }
-      ]
-    }
+    roles: Joi.array().items(Joi.objectId())
+  },
+  workInfo: {
+    lastLoginTime: Joi.date(),
+    lastLogoutTime: Joi.date(),
+    workTime: [
+      {
+        date: Joi.date(),
+        workStartTime: Joi.date(),
+        workFinishTime: Joi.date()
+      }
+    ]
   },
   isLogin: Joi.boolean(),
   condition: Joi.string(),

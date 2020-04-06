@@ -22,13 +22,13 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
   isOwnFeed: boolean;
   isLoading = true;
 
+  currentUserData = JSON.parse(localStorage.getItem('userData'));
+
   constructor(
     private dataStorageService: DataStorageService,
     private homeService: HomeService,
     private userService: UserService
   ) {}
-
-  testtest() {}
 
   ngOnInit() {
     // fetch users
@@ -84,8 +84,7 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
   }
 
   authCheck(feed) {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    this.isOwnFeed = feed.author == userData.userID ? true : false;
+    this.isOwnFeed = feed.author == this.currentUserData.userID ? true : false;
     return this.isOwnFeed;
   }
 

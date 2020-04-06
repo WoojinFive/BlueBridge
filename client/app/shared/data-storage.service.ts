@@ -31,6 +31,15 @@ export class DataStorageService {
     );
   }
 
+  updateUsers(user) {
+    console.log(user);
+    this.http
+      .put('http://localhost:3000/api/users', user)
+      .subscribe(response => {
+        console.log(response);
+      });
+  }
+
   storeFeed(feed) {
     // const feeds = this.homeService.getFeeds();
     // console.log(feeds);
@@ -83,18 +92,22 @@ export class DataStorageService {
   }
 
   fetchSchedule() {
-    return this.http.get<Schedule[]>('http://localhost:3000/api/schedules').pipe(
-      tap(schedules => {
-        this.scheduleService.setSchedules(schedules);
-      })
-    );
+    return this.http
+      .get<Schedule[]>('http://localhost:3000/api/schedules')
+      .pipe(
+        tap(schedules => {
+          this.scheduleService.setSchedules(schedules);
+        })
+      );
   }
 
   addNewSchedule(schedule) {
+    console.log(schedule);
     const newSchedule = schedule;
-    this.http.post('http://localhost:3000/api/schedules', newSchedule).subscribe(() => {
-      this.fetchSchedule().subscribe();
-    });
+    this.http
+      .post('http://localhost:3000/api/schedules', newSchedule)
+      .subscribe(() => {
+        this.fetchSchedule().subscribe();
+      });
   }
-
 }

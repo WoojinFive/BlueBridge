@@ -3,6 +3,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'client/app/shared/auth/auth.service';
+import { WorkService } from 'client/app/shared/work.service';
 
 // Services
 
@@ -36,7 +37,8 @@ export class MainNavComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private authService: AuthService
+    private authService: AuthService,
+    private workService: WorkService
   ) {}
 
   ngOnInit() {
@@ -44,6 +46,14 @@ export class MainNavComponent implements OnInit {
       // this.isAuthnticated = !user ? false : true;
       this.isAuthnticated = !!user; // same as the above
     });
+  }
+
+  onStartWork() {
+    this.workService.startWork();
+  }
+
+  onFinishWork() {
+    this.workService.finishWork();
   }
 
   onLogout() {
