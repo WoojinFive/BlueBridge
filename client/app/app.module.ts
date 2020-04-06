@@ -56,6 +56,8 @@ import { PermissionDetailComponent } from './components/main-nav/sidevar/admin-b
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MyInfoComponent } from './components/user-menus/my-info/my-info.component';
 import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-staff/wage-list-of-staff.component';
+import { PortalComponent } from './components/portal.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userinfo.component';
 import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
 
@@ -100,6 +102,8 @@ import { StatusChangeComponent } from './components/main-nav/sidevar/status-chan
     PageNotFoundComponent,
     MyInfoComponent,
     WageListOfStaffComponent,
+    PortalComponent,
+    LoadingSpinnerComponent,
     UserinfoComponent,
     StatusChangeComponent,
   ],
