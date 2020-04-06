@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -10,6 +10,7 @@ import { ChartsModule } from 'ng2-charts';
 // Material
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +42,6 @@ import { NewUserComponent } from './components/main-nav/sidevar/admin-button/new
 import { NoteComponent } from './components/main-nav/sidevar/user-button/note/note.component';
 import { NoteHistoryComponent } from './components/main-nav/sidevar/user-button/note/note-history/note-history.component';
 import { NoteInputComponent } from './components/main-nav/sidevar/user-button/note/note-input/note-input.component';
-import { NoteDatepickerComponent } from './components/main-nav/sidevar/user-button/note/note-datepicker/note-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/main-nav/sidevar/user-button/calendar/calendar.component';
@@ -89,7 +89,6 @@ import { StatusChangeComponent } from './components/main-nav/sidevar/status-chan
     NoteComponent,
     NoteHistoryComponent,
     NoteInputComponent,
-    NoteDatepickerComponent,
     CalendarComponent,
     CalendarMainComponent,
     ScheduleDetailDialog,
@@ -128,7 +127,10 @@ import { StatusChangeComponent } from './components/main-nav/sidevar/status-chan
       useFactory: adapterFactory,
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'en-EN' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

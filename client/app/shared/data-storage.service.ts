@@ -12,20 +12,24 @@ import { User } from '../shared/user.model';
 import { Schedule } from './schedule.model';
 import { ScheduleService } from './schedule.service';
 
+import { Note } from './note.model';
+import { NoteService } from './note.service';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataStorageService {
   constructor(
     private http: HttpClient,
     private homeService: HomeService,
     private userService: UserService,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    private noteService: NoteService
   ) {}
 
   fetchUsers() {
     return this.http.get<User[]>('http://localhost:3000/api/users').pipe(
-      tap(users => {
+      tap((users) => {
         this.userService.setUsers(users);
       })
     );
@@ -35,7 +39,7 @@ export class DataStorageService {
     console.log(user);
     this.http
       .put('http://localhost:3000/api/users', user)
-      .subscribe(response => {
+      .subscribe((response) => {
         console.log(response);
       });
   }
@@ -85,7 +89,7 @@ export class DataStorageService {
       //     };
       //   });
       // }),
-      tap(feeds => {
+      tap((feeds) => {
         this.homeService.setFeeds(feeds);
       })
     );
@@ -95,7 +99,7 @@ export class DataStorageService {
     return this.http
       .get<Schedule[]>('http://localhost:3000/api/schedules')
       .pipe(
-        tap(schedules => {
+        tap((schedules) => {
           this.scheduleService.setSchedules(schedules);
         })
       );
@@ -109,5 +113,20 @@ export class DataStorageService {
       .subscribe(() => {
         this.fetchSchedule().subscribe();
       });
+  }
+
+  fetchNote() {
+    return this.http.get<Note[]>('http://localhost:3000/api/notes').pipe(
+      tap((notes) => {
+        this.noteService.setNotes(notes);
+      })
+    );
+  }
+
+  addNewMemo(memo) {
+    const newMemo = memo;
+    this.http.post('http://localhost:3000/api/notes', newMemo).subscribe(() => {
+      this.fetchNote().subscribe();
+    });
   }
 }

@@ -2,12 +2,12 @@
     <form class="meeting-form" (ngSubmit)="onAddSchedule(f)" #f="ngForm">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Title</mat-label>
-          <input matInput (ngModel)="input_title" name="input_title" placeholder="" value="">
+          <input matInput (ngModel)="input_title" name="input_title" placeholder="" value="" required>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Description</mat-label>
-          <input matInput (ngModel)="input_description" name="input_description" placeholder="" value="">
+          <input matInput (ngModel)="input_description" name="input_description" placeholder="" value="" required>
         </mat-form-field>
 
         <div
@@ -71,14 +71,14 @@
 
         <mat-form-field appearance="fill" class="where-area">
             <mat-label>Where</mat-label>
-            <input matInput (ngModel)="input_where" name="input_where" placeholder="" value="">
+            <input matInput (ngModel)="input_where" name="input_where" placeholder="" value="" required>
         </mat-form-field>
 
 
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>When do you want to set up this schedule?</mat-label>
-              <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="meetingPicker">
-              <mat-datetimepicker-toggle matSuffix [for]="meetingPicker" matSuffix>
+              <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="meetingPicker" required>
+              <mat-datetimepicker-toggle [for]="meetingPicker" matSuffix>
               </mat-datetimepicker-toggle>
               <mat-datetimepicker #meetingPicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
             </mat-form-field>

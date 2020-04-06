@@ -1,25 +1,24 @@
 <div class="container">
-    <form class="meeting-form">
+    <form class="event-form" (ngSubmit)="onAddSchedule(f)" #f="ngForm">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Title</mat-label>
-          <input matInput placeholder="" value="">
+          <input matInput (ngModel)="input_title" name="input_title" placeholder="" value="">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Description</mat-label>
-            <input matInput placeholder="" value="">
+            <input matInput matInput (ngModel)="input_description" name="input_description" placeholder="" value="">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>When do you want to set up this schedule?</mat-label>
-            <input matInput [matDatepicker]="eventPicker">
-            <mat-datepicker-toggle matSuffix [for]="eventPicker">
-              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #eventPicker></mat-datepicker>
-        </mat-form-field>      
+          <mat-label>When do you want to set up this schedule?</mat-label>
+          <input matInput (ngModel)="input_date" name="input_date" [matDatetimepicker]="eventPicker" required>
+          <mat-datetimepicker-toggle [for]="eventPicker" matSuffix>
+          </mat-datetimepicker-toggle>
+          <mat-datetimepicker #eventPicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+        </mat-form-field>    
 
-        <p class="apply-btn-p"><button mat-raised-button color="primary" class="apply-btn">Apply</button></p>
+        <p class="apply-btn-p"><button mat-raised-button color="primary" type="submit" class="apply-btn">Apply</button></p>
       </form>
 
 </div>

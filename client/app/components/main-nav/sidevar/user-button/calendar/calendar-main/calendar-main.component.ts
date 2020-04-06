@@ -73,6 +73,8 @@ export class CalendarMainComponent implements OnInit {
 
   events: CalendarEvent[] = [];
 
+  isLoading = true;
+
   constructor(
     private dataStorageService: DataStorageService,
     private ScheduleService: ScheduleService,
@@ -106,7 +108,8 @@ export class CalendarMainComponent implements OnInit {
        isEvent: this.isEvent
      }
 
-     return this.events.push(editedSchedule);
+     this.events.push(editedSchedule);
+     return this.isLoading = false;
 
     })
 

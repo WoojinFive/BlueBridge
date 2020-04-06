@@ -1,48 +1,72 @@
-<div
-  *ngFor="let note of notes; let i = index">
+<div class="datapicker">
   <mat-card>
-    <!-- [ngClass]="{'font-red': note.highPriority}" -->
-    <mat-card-title>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="start start">
-        <div fxFlex="90">
-          <span [ngClass]="{'font-red': note.highPriority}">{{ note.description }}</span>
-        </div>
-        <div fxFlex="10">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>edit</mat-icon>
-              <span>Edit</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-        </div>
-      </div>
-    </mat-card-title>
-    <mat-card-content>
-      <!-- <p>{{ note.description }}</p> -->
-      <div
-        fxLayout="row"
-        fxLayoutAlign="spcae-between start">
-        <div fxFlex="10%" fxFlex.xs="20%">
-          <p>{{ note.date }}</p>
-        </div>
-        <!-- <div fxFlex="60%" fxFlex.xs="25%"></div>
-        <div fxFlex="15%" fxFlex.xs="30%">
-          <div mat-card-avatar matBadge="off" matBadgePosition="below after" matBadgeOverlap="true"></div>
-        </div>
-        <div fxFlex="15%" fxFlex.xs="25%">
-          <p>{{ note.user }}</p>
-        </div> -->
-      </div>
-    </mat-card-content>
-    <mat-divider></mat-divider>
+      <p class="dp-p">Do you want to sort notes by date?</p>
+      <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="accent" class="sort-btn">Sort</button>
+        <mat-divider></mat-divider>
   </mat-card>
+</div>
+
+<div *ngIf="isLoading" style="text-align: center;">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="!isLoading">
+  
+<div
+*ngFor="let note of filteredNotes; let i = index">
+<mat-card>
+  <!-- [ngClass]="{'font-red': note.highPriority}" -->
+  <mat-card-title>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start">
+      <div fxFlex="90">
+        <span [ngClass]="{'font-red': note.highPriority}">{{ note.description }}</span>
+      </div>
+      <div fxFlex="10">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <!-- <p>{{ note.description }}</p> -->
+    <div
+      fxLayout="row"
+      fxLayoutAlign="spcae-between start">
+      <div fxFlex="10%" fxFlex.xs="20%">
+        <p>{{ note.date }}</p>
+      </div>
+      <!-- <div fxFlex="60%" fxFlex.xs="25%"></div>
+      <div fxFlex="15%" fxFlex.xs="30%">
+        <div mat-card-avatar matBadge="off" matBadgePosition="below after" matBadgeOverlap="true"></div>
+      </div>
+      <div fxFlex="15%" fxFlex.xs="25%">
+        <p>{{ note.user }}</p>
+      </div> -->
+    </div>
+  </mat-card-content>
+  
+  <mat-divider></mat-divider>
+</mat-card>
+</div>
 </div>

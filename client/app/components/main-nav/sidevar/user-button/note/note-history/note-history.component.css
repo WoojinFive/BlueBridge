@@ -23,3 +23,17 @@ p {
   .font-red {
     color: #e53935;
   }
+
+.dp-p {
+  font-size: 0.8em;
+  color: darkgray;
+}
+
+.sort-btn {
+  margin-left: 20px;
+}
+
+.datepicker {
+  margin: auto;
+}
+
