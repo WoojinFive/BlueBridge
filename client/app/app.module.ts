@@ -60,6 +60,7 @@ import { PortalComponent } from './components/portal.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userinfo.component';
 import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
+import { HomeFeedEditComponent } from './components/home/home-feed/home-feed-edit/home-feed-edit.component';
 
 @NgModule({
   declarations: [
@@ -105,8 +106,9 @@ import { StatusChangeComponent } from './components/main-nav/sidevar/status-chan
     LoadingSpinnerComponent,
     UserinfoComponent,
     StatusChangeComponent,
+    HomeFeedEditComponent,
   ],
-  entryComponents: [ScheduleDetailDialog],
+  entryComponents: [ScheduleDetailDialog, HomeFeedEditComponent],
   imports: [
     BrowserModule,
     FormsModule,

@@ -1,0 +1,31 @@
+<div class="edit-container">
+  <div mat-dialog-content>
+    <p>What are you thinking now?</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.description" />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <div class="checkbox">
+      <mat-checkbox [(ngModel)]="data.isHighPriority"
+        >High priority</mat-checkbox
+      >
+    </div>
+    <div class="button">
+      <button mat-raised-button color="accent" (click)="onNoClick()">
+        CANCEL
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [mat-dialog-close]="{
+          description: data.description,
+          isHighPriority: data.isHighPriority
+        }"
+        cdkFocusInitial
+      >
+        SAVE
+      </button>
+    </div>
+  </div>
+</div>

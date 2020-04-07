@@ -24,6 +24,19 @@ function createFeed(req, res) {
   });
 }
 
+function updateFeed(req, res) {
+  Feeds.findOneAndUpdate(
+    { _id: req.params.id },
+    { ...req.body },
+    (err, feed) => {
+      if (err) return res.status(400).send('Error');
+      if (!feed) return res.status(404).send();
+
+      res.status(200).send();
+    }
+  );
+}
+
 function deleteFeed(req, res) {
   Feeds.findOneAndDelete({ _id: req.params.id }, (err, feed) => {
     if (err) return res.status(400).send('Error');
@@ -34,4 +47,4 @@ function deleteFeed(req, res) {
 }
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllFeeds, createFeed, deleteFeed };
+module.exports = { listAllFeeds, createFeed, updateFeed, deleteFeed };

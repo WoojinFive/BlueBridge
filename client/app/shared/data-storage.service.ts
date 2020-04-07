@@ -59,6 +59,15 @@ export class DataStorageService {
       this.fetchFeeds().subscribe();
     });
   }
+
+  updateFeed(feed) {
+    this.http
+      .put(`http://localhost:3000/api/feeds/${feed._id}`, feed)
+      .subscribe(() => {
+        this.fetchFeeds().subscribe();
+      });
+  }
+
   // storeFeeds() {
   //   const feeds = this.homeService.getFeeds();
   //   console.log(feeds);

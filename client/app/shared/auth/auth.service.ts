@@ -20,7 +20,7 @@ export interface AuthResponseData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   users: User[];
@@ -40,19 +40,45 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>('http://localhost:3000/api/users/login', {
         email: email,
-        password: password
+        password: password,
       })
       .pipe(
-        tap(resData => {
-          this.handleAuthentication(
-            resData.userID,
-            resData.email,
-            resData.firstName,
-            resData.lastName,
-            resData.picture,
-            resData.token,
-            +resData.expiresIn
-          );
+        tap((resData) => {
+          this.dataStorageService.fetchUsers().subscribe(() => {
+            const allUsers = this.userService.getUsers();
+            const currentUser = allUsers.filter(
+              (user) => user._id === resData.userID
+            )[0];
+
+            // add login time in db
+            this.users = this.userService.users;
+
+            const date = new Date();
+            const currentDate = new Date(
+              date.getTime() - date.getTimezoneOffset() * 60000
+            ).toISOString();
+
+            const updatedCurrentUser = {
+              ...currentUser,
+              workInfo: {
+                ...currentUser['workInfo'],
+                lastLoginTime: currentDate,
+              },
+              isLogin: true,
+            };
+
+            this.dataStorageService.updateUsers(updatedCurrentUser);
+
+            this.handleAuthentication(
+              resData.userID,
+              resData.email,
+              resData.firstName,
+              resData.lastName,
+              resData.picture,
+              resData.token,
+              +resData.expiresIn
+            );
+          });
         })
       );
   }
@@ -97,7 +123,7 @@ export class AuthService {
     // add login time in db
     this.users = this.userService.users;
     const currentUser = this.users.filter(
-      user => user._id === userData.userID
+      (user) => user._id === userData.userID
     )[0];
     const date = new Date();
     const currentDate = new Date(
@@ -108,9 +134,9 @@ export class AuthService {
       ...currentUser,
       workInfo: {
         ...currentUser['workInfo'],
-        lastLogoutTime: currentDate
+        lastLogoutTime: currentDate,
       },
-      isLogin: false
+      isLogin: false,
     };
 
     this.dataStorageService.updateUsers(updatedCurrentUser);
@@ -155,9 +181,10 @@ export class AuthService {
     // this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
 
+    /*
     // add login time in db
     this.users = this.userService.users;
-    const currentUser = this.users.filter(user => user._id === userID)[0];
+    const currentUser = this.users.filter((user) => user._id === userID)[0];
     const date = new Date();
     const currentDate = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -167,11 +194,14 @@ export class AuthService {
       ...currentUser,
       workInfo: {
         ...currentUser['workInfo'],
-        lastLoginTime: currentDate
+        lastLoginTime: currentDate,
       },
-      isLogin: true
+      isLogin: true,
     };
 
     this.dataStorageService.updateUsers(updatedCurrentUser);
+
+    this.user.next(null);
+    */
   }
 }

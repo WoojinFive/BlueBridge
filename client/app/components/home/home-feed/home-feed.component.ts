@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -9,10 +9,14 @@ import { UserService } from './../../../shared/user.service';
 import { HomeFeed } from './home-feed.model';
 import { User } from '../../../shared/user.model';
 
+import { MatDialog } from '@angular/material/dialog';
+
+import { HomeFeedEditComponent } from './home-feed-edit/home-feed-edit.component';
+
 @Component({
   selector: 'app-home-feed',
   templateUrl: './home-feed.component.html',
-  styleUrls: ['./home-feed.component.css']
+  styleUrls: ['./home-feed.component.css'],
 })
 export class HomeFeedComponent implements OnInit, OnDestroy {
   users: User[];
@@ -21,13 +25,15 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
   subscriptionUser: Subscription;
   isOwnFeed: boolean;
   isLoading = true;
+  isEditMode = true;
 
   currentUserData = JSON.parse(localStorage.getItem('userData'));
 
   constructor(
     private dataStorageService: DataStorageService,
     private homeService: HomeService,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -54,8 +60,10 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
             });
 
             // add additional info in feeds data
-            this.feeds = this.feeds.map(feed => {
-              const user = this.users.filter(user => user._id === feed.author);
+            this.feeds = this.feeds.map((feed) => {
+              const user = this.users.filter(
+                (user) => user._id === feed.author
+              );
 
               if (!user.length) return feed;
               const userName =
@@ -67,7 +75,7 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
                 ...feed,
                 authorName: userName ? userName : 'Temp User',
                 avatar: user[0].personalInfo.picture,
-                isLogin: user[0].isLogin
+                isLogin: user[0].isLogin,
               };
             });
 
@@ -92,5 +100,37 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     // this.homeService.deleteFeed(feed._id);
     this.dataStorageService.deleteFeed(feed._id);
+  }
+
+  onUpdateFeed(feed) {
+    this.dataStorageService.updateFeed(feed);
+  }
+
+  openDialog(feed): void {
+    const dialogRef = this.dialog.open(HomeFeedEditComponent, {
+      width: '50%',
+      data: {
+        description: feed.description,
+        isHighPriority: feed.isHighPriority,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        const date = new Date();
+        const updateDate = new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString();
+
+        const updatedFeed = {
+          _id: feed._id,
+          author: feed.author,
+          description: result.description,
+          date: updateDate,
+          isHighPriority: result.isHighPriority,
+        };
+        this.onUpdateFeed(updatedFeed);
+      }
+    });
   }
 }

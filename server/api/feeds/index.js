@@ -16,14 +16,21 @@ router.get('/', controller.listAllFeeds);
 /**
  * path: /api/feeds
  * method: POST
- * function: create() in the feeds.controller.js file
+ * function: createFeed() in the feeds.controller.js file
  */
 router.post('/', controller.createFeed);
 
 /**
+ * path: /api/feeds
+ * method: PUT
+ * function: updateFeed() in the feeds.controller.js file
+ */
+router.put('/:id', controller.updateFeed);
+
+/**
  * path: /api/feeds/:id
  * method: DELETE
- * function: update() in the feeds.controller.js file
+ * function: deleteFeed() in the feeds.controller.js file
  */
 router.delete('/:id', controller.deleteFeed);
 
