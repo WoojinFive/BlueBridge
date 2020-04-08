@@ -44,12 +44,11 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
         this.filteredNotes = this.notes.filter(note => {
           if(note.userId === this.userData.userID) {
             return {
-              ...note
+              ...note,
             }
           }
           this.isLoading = false
-        });
-        
+        });        
       }
     )
 
@@ -59,6 +58,11 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.note_subscription.unsubscribe();
     this.subscription.unsubscribe();
+  }
+
+  onNoteDelete(note) {
+    this.isLoading = true;
+    this.DataStorageService.deleteMemo(note._id);
   }
 
 }

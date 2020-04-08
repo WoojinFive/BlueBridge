@@ -129,4 +129,10 @@ export class DataStorageService {
       this.fetchNote().subscribe();
     });
   }
+
+  deleteMemo(id) {
+    this.http.delete(`http://localhost:3000/api/notes/${id}`).subscribe(() => {
+      this.fetchNote().subscribe();
+    });
+  }
 }

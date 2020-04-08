@@ -29,19 +29,15 @@
       fxLayout="row"
       fxLayoutAlign="start start">
       <div fxFlex="90">
-        <span *ngIf="note.isHighPrioirty">[!]</span>
-        <span class="note-description" [ngClass]="{'font-red': note.highPriority}">{{ note.description }}</span>
+        <span *ngIf="note.isHighPriority" class="note-important">[IMPORTANT] </span>
+        <span class="note-description" [ngStyle]="{'font-red': note.isHighPriority}">{{ note.description }}</span>
       </div>
       <div fxFlex="10">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="onNoteDelete(note)">
             <mat-icon>delete</mat-icon>
             <span>Delete</span>
           </button>
@@ -54,8 +50,8 @@
     <div
       fxLayout="row"
       fxLayoutAlign="spcae-between start">
-      <div fxFlex="10%" fxFlex.xs="20%">
-        <p>{{ note.date }}</p>
+      <div fxFlex="20%" fxFlex.xs="20%">
+        <p class="note-date">{{ note.date | date:"MM/dd/yyyy 'at' h:mma" }}</p>
       </div>
       <!-- <div fxFlex="60%" fxFlex.xs="25%"></div>
       <div fxFlex="15%" fxFlex.xs="30%">
