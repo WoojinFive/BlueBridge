@@ -29,7 +29,8 @@
       fxLayout="row"
       fxLayoutAlign="start start">
       <div fxFlex="90">
-        <span [ngClass]="{'font-red': note.highPriority}">{{ note.description }}</span>
+        <span *ngIf="note.isHighPrioirty">[!]</span>
+        <span class="note-description" [ngClass]="{'font-red': note.highPriority}">{{ note.description }}</span>
       </div>
       <div fxFlex="10">
         <button mat-icon-button [matMenuTriggerFor]="menu">
