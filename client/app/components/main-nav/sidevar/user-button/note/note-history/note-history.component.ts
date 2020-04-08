@@ -15,9 +15,12 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
   userData: any;
   notes = [];
   filteredNotes = [];
+  sortedNotes = [];
   isLoading = true;
   subscription: Subscription;
   note_subscription: Subscription;
+  input_date: string = '';
+  sortMode: boolean = false;
 
   constructor(private UserSerivce: UserService, private DataStorageService: DataStorageService, private NoteService: NoteService) { }
 
@@ -51,8 +54,6 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
         });        
       }
     )
-
-    
   }
 
   ngOnDestroy() {
@@ -63,6 +64,37 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
   onNoteDelete(note) {
     this.isLoading = true;
     this.DataStorageService.deleteMemo(note._id);
+  }
+
+  onDateSort(event: any) {    
+    this.sortedNotes = [];
+    this.sortMode = true;
+
+    const inputDate = new Date(this.input_date);
+
+    const inputDate_dd = inputDate.getDate();
+    const inputDate_mm = inputDate.getMonth()+1;
+    const inputDate_yyyy = inputDate.getFullYear();
+
+    this.filteredNotes.map(note => {
+      const individualNoteDate = new Date(note.date)
+      const individualNoteDate_dd = individualNoteDate.getDate();
+      const individualNoteDate_mm = individualNoteDate.getMonth()+1;
+      const individualNoteDate_yyyy = individualNoteDate.getFullYear();
+
+      if (inputDate_dd === individualNoteDate_dd && inputDate_mm === individualNoteDate_mm && inputDate_yyyy === individualNoteDate_yyyy) {
+        this.sortedNotes.push(note);
+      }
+    })
+
+    if (this.sortedNotes.length === 0) {
+      alert("No memo on the day you searched.")
+    }
+  }
+
+  onRefresh(event: any) {
+    this.input_date = '';
+    this.sortMode = false;
   }
 
 }

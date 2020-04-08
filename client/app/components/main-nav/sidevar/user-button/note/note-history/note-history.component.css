@@ -31,6 +31,7 @@ p {
 
 .sort-btn {
   margin-left: 20px;
+  margin-right: 5px;
 }
 
 .datepicker {
@@ -49,4 +50,8 @@ p {
 .note-date {
   color:#424242;
   font-size: 0.74rem;
+}
+
+.note-paginator {
+  width: 93%
 }
