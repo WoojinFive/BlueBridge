@@ -7,6 +7,8 @@ const Users = mongoose.model('User');
 
 const jwt = require('jsonwebtoken');
 
+const util = require('../../utility/utility');
+
 function listAllUsers(req, res) {
   Users.find({}, (err, users) => {
     if (err) return res.status(400).send('Error');
@@ -25,6 +27,31 @@ function create(req, res) {
   const user = req.body;
   users.push(user);
   return res.json(users);
+}
+
+function update(req, res) {
+  const user = req.body;
+
+  // Users.findOne(
+  //   { 'personalInfo.email': user.personalInfo.email },
+  //   (err, doc) => {
+  //     util.updateDocument(doc, Users, user);
+  //     doc.save();
+  //   }
+  // );
+
+  Users.findOneAndUpdate(
+    { 'personalInfo.email': user.personalInfo.email },
+    // { 'workInfo.lastLoginTime': user.workInfo.lastLoginTime },
+    user,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
 }
 
 function login(req, res) {
@@ -62,4 +89,4 @@ function sendToken(user, res) {
 }
 
 // Any functions we create, we want to return these functions to the express app to use.
-module.exports = { listAllUsers, findUserByEmail, create, login };
+module.exports = { listAllUsers, findUserByEmail, create, update, login };

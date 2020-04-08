@@ -1,0 +1,21 @@
+<br/>
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <!-- <div fxFlex="70%" fxFlex.md="70%" fxFlex.sm="70%" fxFlex.xs="70%"> -->
+            <div>
+                <mat-form-field class="big" >
+                    <mat-label>Status</mat-label>
+                    <mat-select [(value)]="selected" >
+                        <mat-option value="{{condition_options[0]}}">{{condition_options[0]}}</mat-option>
+                        <mat-option value="{{condition_options[1]}}">{{condition_options[1]}}</mat-option>
+                        <mat-option value="{{condition_options[2]}}">{{condition_options[2]}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+        </div>
+
+        <!-- <div fxFlex="30%" fxFlex.md="30%" fxFlex.sm="30%" fxFlex.xs="30%" class="align-center"> -->
+            <br/>
+        <div class="align-center" justifyContent="center">
+            <button mat-raised-button color="accent">Change</button>
+        </div>
+    </div>
+

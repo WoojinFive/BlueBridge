@@ -9,7 +9,7 @@ import { User } from './user.model';
 })
 export class UserService {
   usersChanged = new Subject<User[]>();
-  private users: User[] = [];
+  public users: User[] = [];
 
   setUsers(users: User[]) {
     this.users = users;

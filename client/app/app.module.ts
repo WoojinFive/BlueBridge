@@ -57,7 +57,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { MyInfoComponent } from './components/user-menus/my-info/my-info.component';
 import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-staff/wage-list-of-staff.component';
 import { PortalComponent } from './components/portal.component';
-import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userinfo.component';
+import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,9 @@ import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinne
     MyInfoComponent,
     WageListOfStaffComponent,
     PortalComponent,
-    LoadingSpinnerComponenr
+    LoadingSpinnerComponent,
+    UserinfoComponent,
+    StatusChangeComponent,
   ],
   entryComponents: [ScheduleDetailDialog],
   imports: [
@@ -118,12 +122,15 @@ import { LoadingSpinnerComponenr } from './shared/loading-spinner/loading-spinne
     MaterialModule,
     NgxMaterialTimepickerModule,
 
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-EN' },
     { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

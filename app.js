@@ -43,10 +43,14 @@ app.set('view engine', 'html');
 mongoose
   .connect(
     'mongodb+srv://bluebridge:nscccapstone@blue-bridge-25rgb.mongodb.net/test',
-    { useNewUrlParser: true, useUnifiedTopology: true, dbName: "bluebridge" }
+    { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'bluebridge' }
   )
   .then(() => console.log('Connected to Mongo...'))
   .catch(err => console.log(err));
+
+// Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
+// by default, you need to set it to false.
+mongoose.set('useFindAndModify', false);
 
 /**
  * Here we make a variable Routes equal to the routes.js file located in the server folder.

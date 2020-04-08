@@ -16,7 +16,7 @@ import { Note } from './note.model';
 import { NoteService } from './note.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataStorageService {
   constructor(
@@ -24,15 +24,24 @@ export class DataStorageService {
     private homeService: HomeService,
     private userService: UserService,
     private scheduleService: ScheduleService,
-    private noteService: NoteService,
+    private noteService: NoteService
   ) {}
 
   fetchUsers() {
     return this.http.get<User[]>('http://localhost:3000/api/users').pipe(
-      tap(users => {
+      tap((users) => {
         this.userService.setUsers(users);
       })
     );
+  }
+
+  updateUsers(user) {
+    console.log(user);
+    this.http
+      .put('http://localhost:3000/api/users', user)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 
   storeFeed(feed) {
@@ -80,30 +89,35 @@ export class DataStorageService {
       //     };
       //   });
       // }),
-      tap(feeds => {
+      tap((feeds) => {
         this.homeService.setFeeds(feeds);
       })
     );
   }
 
   fetchSchedule() {
-    return this.http.get<Schedule[]>('http://localhost:3000/api/schedules').pipe(
-      tap(schedules => {
-        this.scheduleService.setSchedules(schedules);
-      })
-    );
+    return this.http
+      .get<Schedule[]>('http://localhost:3000/api/schedules')
+      .pipe(
+        tap((schedules) => {
+          this.scheduleService.setSchedules(schedules);
+        })
+      );
   }
 
   addNewSchedule(schedule) {
+    console.log(schedule);
     const newSchedule = schedule;
-    this.http.post('http://localhost:3000/api/schedules', newSchedule).subscribe(() => {
-      this.fetchSchedule().subscribe();
-    });
+    this.http
+      .post('http://localhost:3000/api/schedules', newSchedule)
+      .subscribe(() => {
+        this.fetchSchedule().subscribe();
+      });
   }
 
   fetchNote() {
     return this.http.get<Note[]>('http://localhost:3000/api/notes').pipe(
-      tap(notes => {
+      tap((notes) => {
         this.noteService.setNotes(notes);
       })
     );
@@ -115,5 +129,4 @@ export class DataStorageService {
       this.fetchNote().subscribe();
     });
   }
-
 }
