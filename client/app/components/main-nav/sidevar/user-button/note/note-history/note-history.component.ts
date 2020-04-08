@@ -41,8 +41,13 @@ export class NoteHistoryComponent implements OnInit, OnDestroy {
           );
         });
 
-        this.notes.filter(note => {
-          if(note.userId === this.userData.userID) return ( this.filteredNotes.push(note), this.isLoading = false );
+        this.filteredNotes = this.notes.filter(note => {
+          if(note.userId === this.userData.userID) {
+            return {
+              ...note
+            }
+          }
+          this.isLoading = false
         });
         
       }
