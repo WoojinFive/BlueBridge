@@ -1,44 +1,149 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
+import { User } from 'client/app/shared/user.model';
+import { UserService } from 'client/app/shared/user.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   position: number;
   name: string;
   department: string;
   job_title: string;
+  picture: string;
   chat: boolean;
+  isLogin: boolean;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: 'Heejin Jeon',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 2,
-    name: 'Woojin Oh',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 3,
-    name: 'Injun Hwang',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 4,
-    name: 'John Doe',
-    department: 'Web Development',
-    job_title: 'Senior Web Developer',
-    chat: false
-  }
+  // {
+  //   position: 10,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 11,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 13,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 14,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 15,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 16,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 17,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 18,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 19,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 20,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 21,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 22,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 23,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+  // {
+  //   position: 24,
+  //   name: 'Heejin Jeon',
+  //   department: 'What',
+  //   job_title: 'What',
+  //   picture: "4",
+  //   isLogin: true,
+  //   chat: true
+  // },
+
+  
 ];
 
 @Component({
@@ -47,6 +152,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./staff.component.css']
 })
 export class StaffComponent implements OnInit {
+  users: User[] = [];
   displayedColumns: string[] = [
     'select',
     'position',
@@ -57,6 +163,7 @@ export class StaffComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -87,7 +194,27 @@ export class StaffComponent implements OnInit {
     } row ${row.position + 1}`;
   }
 
-  constructor() {}
+  constructor(private UserSerivce: UserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { 
+    this.users = this.UserSerivce.getUsers();
+    console.log(this.users);
+
+    this.users.map((user, index) => {
+      let customStaff = {
+        position: index,
+        name: user.personalInfo.firstName + ' ' + user.personalInfo.lastName,
+        department: user.employeeInfo.department,
+        job_title: user.employeeInfo.position,
+        picture: user.personalInfo.picture,
+        isLogin: user.isLogin,
+        chat: true
+      }
+
+      ELEMENT_DATA.push(customStaff);
+    })
+
+    this.dataSource.paginator = this.paginator;
+
+  }
 }
