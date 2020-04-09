@@ -68,8 +68,6 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void { 
     this.users = this.UserSerivce.getUsers();
-    console.log(this.users);
-
       this.users.map((user, index) => {
         let customStaff = {
           position: index,
