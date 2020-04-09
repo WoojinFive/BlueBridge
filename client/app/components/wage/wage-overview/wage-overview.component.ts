@@ -15,6 +15,8 @@ export class WageOverviewComponent implements OnInit {
   user: any;
   workInfo: any;
 
+  years = ['2018', '2019', '2020'];
+
   currentUserData = JSON.parse(localStorage.getItem('userData'));
 
   constructor(
@@ -31,7 +33,6 @@ export class WageOverviewComponent implements OnInit {
 
     this.currentYear = +this.currentDate.substring(0, 4);
     this.currentMonth = +this.currentDate.substring(5, 7);
-    console.log(this.currentYear, this.currentMonth);
 
     // fetch user's working hour history
     this.user = this.userService
@@ -47,13 +48,16 @@ export class WageOverviewComponent implements OnInit {
           this.currentYear == +dateString.substring(0, 4)
         );
       });
-      console.log(currentWorkInfos);
       this.wageService.setWorkingHours(currentWorkInfos);
     }
   }
 
   onChangeLastMonth() {
     this.currentMonth = +this.currentMonth - 1;
+    if (this.currentMonth === 0) {
+      this.currentMonth = 12;
+      this.currentYear = +this.currentYear - 1;
+    }
 
     // fetch user's working hour history
     this.user = this.userService
@@ -61,6 +65,7 @@ export class WageOverviewComponent implements OnInit {
       .filter((user) => user._id === this.currentUserData.userID);
 
     this.workInfo = this.user[0].workInfo.workTime;
+
     const currentWorkInfos = this.workInfo.filter((date) => {
       const dateString = new Date(date.date).toISOString();
       return (
@@ -68,11 +73,18 @@ export class WageOverviewComponent implements OnInit {
         this.currentYear == +dateString.substring(0, 4)
       );
     });
+
+    this.currentDate = currentWorkInfos[0].date;
+
     this.wageService.setWorkingHours(currentWorkInfos);
   }
 
   onChangeNextMonth() {
     this.currentMonth = +this.currentMonth + 1;
+    if (this.currentMonth === 13) {
+      this.currentMonth = 1;
+      this.currentYear = +this.currentYear + 1;
+    }
 
     // fetch user's working hour history
     this.user = this.userService
@@ -87,6 +99,9 @@ export class WageOverviewComponent implements OnInit {
         this.currentYear == +dateString.substring(0, 4)
       );
     });
+
+    this.currentDate = currentWorkInfos[0].date;
+
     this.wageService.setWorkingHours(currentWorkInfos);
   }
 }

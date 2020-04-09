@@ -1,9 +1,42 @@
-.align-center {
-  margin: auto;
-}
-
 .mat-icon {
   width: 100%;
   text-align: center;
   font-size: 48px;
+}
+
+.align-right {
+  text-align: right;
+  margin: auto;
+}
+
+.align-center {
+  text-align: center;
+  margin: auto;
+}
+
+.title {
+  font-size: calc(12px + 1.5vw);
+  color: #424242;
+  margin: 10px 0px;
+}
+
+/* xs - part 1 */
+@media only screen and (max-width: 399px) {
+  ::ng-deep .mat-form-field-infix {
+    width: 80px !important;
+  }
+}
+
+/* xs - part 1 */
+@media only screen and (min-width: 400px) and (max-width: 599px) {
+  ::ng-deep .mat-form-field-infix {
+    width: 100px !important;
+  }
+}
+
+/* sm */
+@media only screen and (min-width: 600px) and (max-width: 959px) {
+  ::ng-deep .mat-form-field-infix {
+    width: 120px !important;
+  }
 }

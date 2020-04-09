@@ -16,6 +16,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(private wageService: WageService) {}
 
   ngOnInit(): void {
+    const date = new Date();
+    const updateDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString();
+    console.log(updateDate);
+
     this.getData();
 
     this.subscriptionworkingHours = this.wageService.workingHoursChanged.subscribe(

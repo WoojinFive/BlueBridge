@@ -1,4 +1,60 @@
-<app-search></app-search>
+<!-- <app-search></app-search> -->
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="10%"></div>
+  <div fxFlex="80%">
+    <div fxLayout="row wrap" fxLayoutAlign="end">
+      <div fxFlex="40%" fxFlex.md="30%" fxFlex.sm="25%" fxFlex.xs="100%">
+        <!-- <p class="title">{{ currentDate | date: 'MMMM, y' }}</p> -->
+        <p class="title">{{ currentDate | date: 'MMMM, y' }}</p>
+      </div>
+      <div
+        fxFlex="25%"
+        fxFlex.md="28%"
+        fxFlex.sm="30%"
+        fxFlex.xs="35%"
+        class="align-right"
+      >
+        <mat-form-field>
+          <mat-label>Select Month</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div
+        fxFlex="25%"
+        fxFlex.md="28%"
+        fxFlex.sm="30%"
+        fxFlex.xs="35%"
+        class="align-right"
+      >
+        <mat-form-field>
+          <mat-label>Select Year</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div
+        fxFlex="10%"
+        fxFlex.md="14%"
+        fxFlex.sm="15%"
+        fxFlex.xs="20%"
+        class="align-right"
+      >
+        <button mat-flat-button color="primary">
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="10%"></div>
+</div>
+
 <app-overview></app-overview>
 
 <div fxLayout="row" fxLayoutAlign="center center">
