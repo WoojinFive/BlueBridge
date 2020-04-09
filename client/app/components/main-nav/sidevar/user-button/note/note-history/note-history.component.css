@@ -31,9 +31,27 @@ p {
 
 .sort-btn {
   margin-left: 20px;
+  margin-right: 5px;
 }
 
 .datepicker {
   margin: auto;
 }
 
+.note-description {
+  font-size: 1rem;
+}
+
+.note-important {
+  font-size: 1rem;
+  color: red;
+}
+
+.note-date {
+  color:#424242;
+  font-size: 0.74rem;
+}
+
+.note-paginator {
+  width: 93%
+}
