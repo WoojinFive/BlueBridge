@@ -4,12 +4,16 @@
       fxLayout="row"
       fxLayoutAlign="center start"
       class="container"
-      *ngFor="let item of workingHours; let i = index">
+      *ngFor="let item of workingHours; let i = index"
+    >
       <div fxFlex="15%" fxFlex.xs="20%">
-        <p class="no-y-margin">{{ item.start | date: 'MMM, d' }}</p>
+        <p class="no-y-margin">{{ item.workStartTime | date: 'MMM, d' }}</p>
       </div>
       <div fxFlex="70%" fxFlex.xs="80%">
-        <p class="no-y-margin">Started work at {{ item.start | date: 'shortTime' }} || Worked for {{ dailyWorkingHours[i] }} hours</p>
+        <p class="no-y-margin">
+          Started work at {{ item.workStartTime | date: 'shortTime' }} || Worked
+          for {{ dailyWorkingHours[i] }} hours
+        </p>
       </div>
       <div fxFlex="15%" fxFlex.xs="0%"></div>
     </div>

@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'portal/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'portal',
@@ -32,67 +32,67 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
       },
       {
         path: 'staff',
-        component: StaffComponent
+        component: StaffComponent,
       },
       {
         path: 'note',
-        component: NoteComponent
+        component: NoteComponent,
       },
       {
         path: 'calendar',
-        component: CalendarComponent
+        component: CalendarComponent,
       },
       {
         path: 'calendar-new',
-        component: CalendarNewScheduleComponent
+        component: CalendarNewScheduleComponent,
       },
 
       // Admin only accessible pages
       {
         path: 'wage-overview',
-        component: WageOverviewComponent
+        component: WageOverviewComponent,
       },
       {
         path: 'new-user',
-        component: NewUserComponent
+        component: NewUserComponent,
       },
       {
         path: 'permission-detail',
-        component: PermissionDetailComponent
+        component: PermissionDetailComponent,
       },
       {
         path: 'wagelist',
-        component: WageListOfStaffComponent
+        component: WageListOfStaffComponent,
       },
       {
         path: 'myinfo',
-        component: MyInfoComponent
-      }
-    ]
+        component: MyInfoComponent,
+      },
+    ],
   },
   // User accessible pages
   {
     path: 'signin',
-    component: SigninComponent
+    component: SigninComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
 
   // Others
   {
     path: '**',
-    component: PageNotFoundComponent
-  }
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

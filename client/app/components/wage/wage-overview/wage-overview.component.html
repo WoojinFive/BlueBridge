@@ -1,4 +1,16 @@
 <app-search></app-search>
 <app-overview></app-overview>
-<app-chart></app-chart>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="10%" class="align-center">
+    <mat-icon (click)="onChangeLastMonth()">keyboard_arrow_left</mat-icon>
+  </div>
+  <div fxFlex="80%">
+    <app-chart></app-chart>
+  </div>
+  <div fxFlex="10%" class="align-center">
+    <mat-icon (click)="onChangeNextMonth()">keyboard_arrow_right</mat-icon>
+  </div>
+</div>
+
 <app-detail></app-detail>

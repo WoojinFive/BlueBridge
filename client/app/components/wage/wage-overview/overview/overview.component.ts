@@ -1,23 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WageService } from './../wage.service';
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css']
+  styleUrls: ['./overview.component.css'],
 })
+export class OverviewComponent implements OnInit, OnDestroy {
+  subscriptionworkingHours: Subscription;
 
-export class OverviewComponent implements OnInit {
-  workingHours = this.wageService.getWorkingHours();
-  workingHoursArray = this.wageService.getWorkingHoursArray();
-  totalHoursFloat = this.wageService.getTotalHoursFloat();
-  totalHours = ~~this.totalHoursFloat;
-  totalMinutes = (this.totalHoursFloat - this.totalHours) * 60;
-  totalDays = this.workingHours.length;
+  workingHours = [];
+  totalHoursFloat = null;
+  totalHours = null;
+  totalMinutes = null;
+  totalDays = null;
 
-  constructor(private wageService: WageService) { }
+  constructor(private wageService: WageService) {}
 
   ngOnInit(): void {
+    this.getData();
+
+    this.subscriptionworkingHours = this.wageService.workingHoursChanged.subscribe(
+      (workingHours: any) => {
+        this.getData();
+      }
+    );
   }
- 
+
+  getData() {
+    this.workingHours = this.wageService.getWorkingHours();
+    this.wageService.setWorkingHoursArray(this.workingHours);
+    this.totalHoursFloat = this.wageService.getTotalHoursFloat();
+    this.totalHours = ~~this.totalHoursFloat;
+    this.totalMinutes = (this.totalHoursFloat - this.totalHours) * 60;
+    this.totalDays = this.workingHours.length;
+  }
+
+  ngOnDestroy() {
+    this.subscriptionworkingHours.unsubscribe();
+  }
 }
