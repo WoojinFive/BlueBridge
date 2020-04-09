@@ -43,6 +43,10 @@
                   <mat-icon>delete</mat-icon>
                   <span>Delete</span>
                 </button>
+                <button *ngIf="note.isHighPriority" mat-menu-item (click)="onNoteDelete(note)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Disable High Priority</span>
+                </button>
               </mat-menu>
             </div>
           </div>

@@ -137,6 +137,7 @@ export class CalendarMainComponent implements OnInit {
     this.dialog_eventData = event;
     
     if(this.eventData.user) {
+      console.log(this.eventData.user)
       const matchedUser = this.eventData.user.map(userid => {
         return this.allUsers.filter(user => user._id === userid)
       })

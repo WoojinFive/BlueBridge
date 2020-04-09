@@ -41,12 +41,13 @@ const joiUserSchema = Joi.object({
   },
   isLogin: Joi.boolean(),
   condition: Joi.string(),
-  note: {
-    // Personal note
-    description: Joi.string(),
-    date: Joi.date(),
-    isHighPriority: Joi.boolean()
-  }
+  isApproved: Joi.boolean()
+  // note: {
+  //   // Personal note
+  //   description: Joi.string(),
+  //   date: Joi.date(),
+  //   isHighPriority: Joi.boolean()
+  // }
 });
 
 const mongooseUserSchema = joigoose.convert(joiUserSchema);

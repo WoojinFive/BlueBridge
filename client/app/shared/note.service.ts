@@ -20,9 +20,5 @@ export class NoteService {
     return this.notes.slice();
   }
 
-//   addSchedule(schedule: Schedule) {
-//     this.schedules.push(schedule);
-//     this.schedulesChanged.next(this.schedules.slice());
-//   }
 
 }
