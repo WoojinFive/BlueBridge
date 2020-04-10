@@ -6,7 +6,7 @@
   <div class="user-list">
     <mat-form-field>
       <mat-label>New requested User List</mat-label>
-      <mat-select (selectionChange)="selected($event)">
+      <mat-select (selectionChange)="selected($event)" class="selection-list">
         <mat-option *ngFor="let user of users" [value]="user._id">
           {{user.personalInfo.firstName}} {{user.personalInfo.lastName}}
         </mat-option>
