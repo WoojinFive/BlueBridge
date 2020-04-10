@@ -46,21 +46,15 @@
           ></div> -->
           <div
             mat-card-avatar
-            matBadge="{{
-              element.name === 'John Doe' || element.name === 'Woojin Oh'
-                ? 'on'
-                : 'off'
-            }}"
+            matBadge="{{ element.isLogin ? 'on' : 'off' }}"
             matBadgePosition="below after"
             matBadgeOverlap="true"
             [ngStyle]="{
               'background-image':
-                'url(/assets/img/avataaars-' +
-                element.name.split(' ')[0] +
-                '.png)'
+                'url(/assets/img/avatar/' + element.picture + '.png)'
             }"
             [ngClass]="{
-              off: element.name !== 'John Doe' && element.name !== 'Woojin Oh'
+              off: !element.isLogin
             }"
           ></div>
         </td>
@@ -99,6 +93,8 @@
         (click)="selection.toggle(row)"
       ></tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 
   <div class="button-area">

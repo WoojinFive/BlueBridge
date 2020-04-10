@@ -1,45 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
+import { User } from 'client/app/shared/user.model';
+import { UserService } from 'client/app/shared/user.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   position: number;
   name: string;
   department: string;
   job_title: string;
+  picture: string;
   chat: boolean;
+  isLogin: boolean;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: 'Heejin Jeon',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 2,
-    name: 'Woojin Oh',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 3,
-    name: 'Injun Hwang',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 4,
-    name: 'John Doe',
-    department: 'Web Development',
-    job_title: 'Senior Web Developer',
-    chat: false
-  }
-];
 
 @Component({
   selector: 'app-staff',
@@ -47,6 +21,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./staff.component.css']
 })
 export class StaffComponent implements OnInit {
+  ELEMENT_DATA: PeriodicElement[] = [];
+  users: User[] = [];
   displayedColumns: string[] = [
     'select',
     'position',
@@ -55,8 +31,9 @@ export class StaffComponent implements OnInit {
     'job_title',
     'chat'
   ];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -87,7 +64,25 @@ export class StaffComponent implements OnInit {
     } row ${row.position + 1}`;
   }
 
-  constructor() {}
+  constructor(private UserSerivce: UserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { 
+    this.users = this.UserSerivce.getUsers();
+      this.users.map((user, index) => {
+        let customStaff = {
+          position: index,
+          name: user.personalInfo.firstName + ' ' + user.personalInfo.lastName,
+          department: user.employeeInfo.department,
+          job_title: user.employeeInfo.position,
+          picture: user.personalInfo.picture,
+          isLogin: user.isLogin,
+          chat: true
+        }
+  
+        this.ELEMENT_DATA.push(customStaff);
+      })
+
+    this.dataSource.paginator = this.paginator;
+
+  }
 }
