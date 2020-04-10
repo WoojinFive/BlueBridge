@@ -12,6 +12,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   subscriptionworkingHours: Subscription;
 
   workingHours = [];
+  hourlyWage = null;
   totalHoursFloat = null;
   totalHours = null;
   totalMinutes = null;
@@ -32,6 +33,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   getData() {
     this.workingHours = this.wageService.getWorkingHours();
     this.wageService.setWorkingHoursArray(this.workingHours);
+    this.hourlyWage = this.wageService.getHourlyWage();
     this.totalHoursFloat = this.wageService.getTotalHoursFloat();
     this.totalHours = ~~this.totalHoursFloat;
     this.totalMinutes = (this.totalHoursFloat - this.totalHours) * 60;

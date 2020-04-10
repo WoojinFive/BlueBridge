@@ -36,7 +36,6 @@ export class DataStorageService {
   }
 
   updateUsers(user) {
-    console.log(user);
     this.http
       .put('http://localhost:3000/api/users', user)
       .subscribe((response) => {

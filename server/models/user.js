@@ -8,25 +8,23 @@ Joi.objectId = require('joi-objectid')(Joi);
 const joiUserSchema = Joi.object({
   // _id: Joi.objectId().required(),
   personalInfo: {
-    email: Joi.string()
-      .email()
-      .required(),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
-    firstName: Joi.string()
-      .min(1)
-      .max(50)
-      .required(),
-    lastName: Joi.string()
-      .min(1)
-      .max(30)
-      .required(),
-    picture: Joi.string()
+    firstName: Joi.string().min(1).max(50).required(),
+    lastName: Joi.string().min(1).max(30).required(),
+    picture: Joi.string(),
   },
   employeeInfo: {
     department: Joi.string(),
     position: Joi.string(),
     hourlyWage: Joi.number(),
-    roles: Joi.array().items(Joi.objectId())
+    roles: Joi.array().items(Joi.objectId()),
+    deductions: [
+      {
+        reason: Joi.string(),
+        amount: Joi.number(),
+      },
+    ],
   },
   workInfo: {
     lastLoginTime: Joi.date(),
@@ -35,9 +33,9 @@ const joiUserSchema = Joi.object({
       {
         date: Joi.date(),
         workStartTime: Joi.date(),
-        workFinishTime: Joi.date()
-      }
-    ]
+        workFinishTime: Joi.date(),
+      },
+    ],
   },
   isLogin: Joi.boolean(),
   condition: Joi.string(),
@@ -45,8 +43,8 @@ const joiUserSchema = Joi.object({
     // Personal note
     description: Joi.string(),
     date: Joi.date(),
-    isHighPriority: Joi.boolean()
-  }
+    isHighPriority: Joi.boolean(),
+  },
 });
 
 const mongooseUserSchema = joigoose.convert(joiUserSchema);

@@ -1,6 +1,6 @@
 <mat-divider></mat-divider>
 <div class="container">
-  <p>Gross Total: $ {{ totalHoursFloat * hourlyWage | number: "1.2-2" }}</p>
+  <p>Gross Total: $ {{ totalHoursFloat * hourlyWage | number: '1.2-2' }}</p>
   <form [formGroup]="wageForm" (ngSubmit)="onWageSubmit()">
     <div fxLayout="row" fxLayoutAlign="center center">
       <div fxFlex="25%" fxFlex.xs="20%"></div>
@@ -57,7 +57,7 @@
       </div>
     </div>
   </form>
-  <form [formGroup]="deductionsForm" (ngSubmit)="onDeductionsSubmit()">
+  <form [formGroup]="deductionsForm" (ngSubmit)="onDeductionsSubmit($event)">
     <div fxLayout="row" fxLayoutAlign="center center">
       <div fxFlex="25%" fxFlex.xs="20%" class="vertical-align-center">
         <label class="sub-label">Additional Deductions</label>
@@ -66,8 +66,8 @@
         <mat-form-field>
           <input
             matInput
+            type="text"
             placeholder="Input the reason"
-            value=""
             formControlName="reason"
           />
         </mat-form-field>
@@ -76,8 +76,9 @@
         <mat-form-field>
           <input
             matInput
+            type="text"
+            id="amount"
             placeholder="Input the amount"
-            value=""
             formControlName="amount"
           />
         </mat-form-field>
@@ -98,7 +99,7 @@
     <div fxFlex="24%" fxFlex.xs="20%"></div>
     <div fxFlex="76%" fxFlex.xs="80%">
       <mat-card class="float-right">
-        <div class="align=left" *ngIf="!deductions.length">
+        <div class="align=left" *ngIf="deductions.length === 0">
           <p>No Deduction</p>
         </div>
         <div
@@ -111,7 +112,7 @@
             <p>{{ deduction.reason }}</p>
           </div>
           <div fxFlex="20%">
-            <p>${{ deduction.amount | number: "1.2-2" }}</p>
+            <p>${{ deduction.amount | number: '1.2-2' }}</p>
           </div>
           <div fxFlex="20%" class="remove-button">
             <i class="material-icons" (click)="onRemoveDeduction(i)">cancel</i>
@@ -126,7 +127,7 @@
     <p>
       Net Total : ${{
         totalHoursFloat * hourlyWage * (1 - tax * 0.01) - totalDeductions
-          | number: "1.2-2"
+          | number: '1.2-2'
       }}
     </p>
   </div>
