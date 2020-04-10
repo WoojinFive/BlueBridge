@@ -35,10 +35,11 @@ export class NewUserComponent implements OnInit, OnDestroy {
     const isApproved = true;
 
     const approvedUser = {
-      ...this.selectedPerson,
+      ...this.selectedPerson[0],
       employeeInfo: {
+        roles: this.selectedPerson[0].employeeInfo.roles,
         department: department,
-        job_title: jobTitle
+        position: jobTitle
       },
       isApproved: isApproved
     };
