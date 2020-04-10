@@ -1,85 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  position: number;
-  name: string;
-  department: string;
-  job_title: string;
-  chat: boolean;
-}
-
-interface Department {
-  value: number;
-  viewValue: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: ' Lara Vel',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  },
-  {
-    position: 2,
-    name: 'React Native',
-    department: 'Web Development',
-    job_title: 'Junior Web Developer',
-    chat: true
-  }
-];
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { User } from 'client/app/shared/user.model';
+import { UserService } from 'client/app/shared/user.service';
+import { NgForm } from '@angular/forms';
+import { DataStorageService } from 'client/app/shared/data-storage.service';
+import { Subscription } from 'rxjs';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.css']
 })
-export class NewUserComponent implements OnInit {
-  displayedColumns: string[] = [
-    'select',
-    'position',
-    'name',
-    'department',
-    'job_title',
-    'chat'
-  ];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+export class NewUserComponent implements OnInit, OnDestroy {
+  users: User[] = [];
+  subscription: Subscription;
+  input_department: string;
+  input_jobTitle: string;
+  selectedId: string;
+  selectedPerson: any;
+  viewable: boolean = false;
 
-  departments: Department[] = [
-    { value: 1, viewValue: 'Web Development' },
-    { value: 2, viewValue: 'Data Analyst' },
-    { value: 3, viewValue: 'Project Management' }
-  ];
+  constructor(private UserSerivce: UserService, private DataStorageService: DataStorageService) {}
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+  ngOnInit(): void {
+    console.log(this.viewable);
+    this.users = this.UserSerivce.getUsers();
+    this.users = this.users.filter(user => !user.isApproved);
+    this.subscription = this.UserSerivce.usersChanged.subscribe();
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+  onApprove(form: NgForm) {
+    const department = form.value.input_department;
+    const jobTitle = form.value.input_jobTitle;
+    const isApproved = true;
+
+    const approvedUser = {
+      ...this.selectedPerson,
+      employeeInfo: {
+        department: department,
+        job_title: jobTitle
+      },
+      isApproved: isApproved
+    };
+
+    form.reset();
+    this.DataStorageService.updateUsers(approvedUser);
+    window.location.reload();
   }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
-  constructor() {}
+  selected(event: MatSelectChange) {
+    this.selectedId = event.value;
 
-  ngOnInit(): void {}
+    this.selectedPerson = this.users.filter(user => user._id === this.selectedId);
+  }
+
+  onView() {
+    this.viewable = true;
+  }
 }

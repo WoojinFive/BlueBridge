@@ -21,7 +21,7 @@ router.get('/', controller.listAllNotes);
 router.post('/', controller.createNote);
 
 /**
- * path: /api/feeds/:id
+ * path: /api/notes/:id
  * method: DELETE
  * function: update() in the notes.controller.js file
  */
