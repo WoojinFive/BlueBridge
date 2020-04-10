@@ -9,6 +9,9 @@ export class WageService {
 
   public workingHoursArray = [];
   public totalHoursFloat = 0;
+  public hourlyWage = 0;
+
+  public deductions = [];
 
   constructor() {}
 
@@ -40,6 +43,14 @@ export class WageService {
     });
   };
 
+  setHourlyWage = (hourlyWage) => {
+    this.hourlyWage = hourlyWage;
+  };
+
+  getHourlyWage = () => {
+    return this.hourlyWage;
+  };
+
   // [1, 2, ... , 30, 31]
   getDateArray = (start, end) => {
     var arr = [];
@@ -67,5 +78,17 @@ export class WageService {
       0
     );
     return this.totalHoursFloat;
+  }
+
+  setDeductions(deductions) {
+    this.deductions = deductions;
+  }
+
+  getDeductions() {
+    if (this.deductions.length !== 0) {
+      return this.deductions.slice();
+    } else {
+      return this.deductions;
+    }
   }
 }
