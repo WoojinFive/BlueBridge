@@ -12,10 +12,17 @@ body {
     margin-top: 50px;
 }
 
-.role-button-section {
-    margin: 30px auto auto 140px;
-}
-
 .mat-raised-button {
     margin: 5px;
+}
+
+.cancel-btn, .apply-btn {
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.remove-button {
+    margin: auto 0;
 }

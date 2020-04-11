@@ -20,13 +20,13 @@ export class NewUserComponent implements OnInit, OnDestroy {
   selectedPerson: any;
   viewable: boolean = false;
 
-  constructor(private UserSerivce: UserService, private DataStorageService: DataStorageService) {}
+  constructor(private UserService: UserService, private DataStorageService: DataStorageService) {}
 
   ngOnInit(): void {
     console.log(this.viewable);
-    this.users = this.UserSerivce.getUsers();
+    this.users = this.UserService.getUsers();
     this.users = this.users.filter(user => !user.isApproved);
-    this.subscription = this.UserSerivce.usersChanged.subscribe();
+    this.subscription = this.UserService.usersChanged.subscribe();
   }
 
   onApprove(form: NgForm) {

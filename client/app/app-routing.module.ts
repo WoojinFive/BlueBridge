@@ -17,6 +17,7 @@ import { PermissionDetailComponent } from './components/main-nav/sidevar/admin-b
 import { MyInfoComponent } from './components/user-menus/my-info/my-info.component';
 import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-staff/wage-list-of-staff.component';
 import { PortalComponent } from './components/portal.component';
+import { PermissionComponent } from './components/main-nav/sidevar/admin-button/permission/permission.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
       {
         path: 'new-user',
         component: NewUserComponent,
+      },
+      {
+        path: 'permission',
+        component: PermissionComponent,
       },
       {
         path: 'permission-detail',
