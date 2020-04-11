@@ -1,0 +1,34 @@
+.header {
+    margin-top: 30px;
+    margin-left: 50px;
+    letter-spacing: 0.14em;
+  }
+  
+  .mat-form-field {
+    padding-left: 50px;
+    padding-top: 30px;
+    padding-right: 10px;
+    font-size: 14px;
+    width: 25%;
+  }
+  
+
+  .text-field {
+      width: 60%;
+      margin-left: -50px;
+  }
+
+  .view-card {
+      margin: 0;
+      text-align: center;
+  }
+
+  .person-info {
+      color: red;
+  }
+
+  .approve-btn {
+      margin-right: 5px;
+  }
+
+  

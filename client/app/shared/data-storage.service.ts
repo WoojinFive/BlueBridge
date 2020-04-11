@@ -114,6 +114,15 @@ export class DataStorageService {
       );
   }
 
+  updateSchedule(schedule) {
+    console.log(schedule);
+    this.http
+      .put('http://localhost:3000/api/schedules', schedule)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
   addNewSchedule(schedule) {
     console.log(schedule);
     const newSchedule = schedule;
@@ -122,6 +131,12 @@ export class DataStorageService {
       .subscribe(() => {
         this.fetchSchedule().subscribe();
       });
+  }
+
+  deleteSchedule(id) {
+    this.http.delete(`http://localhost:3000/api/schedules/${id}`).subscribe(() => {
+      this.fetchSchedule().subscribe();
+    });
   }
 
   fetchNote() {

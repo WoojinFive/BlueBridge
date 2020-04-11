@@ -18,6 +18,7 @@ import { MyInfoComponent } from './components/user-menus/my-info/my-info.compone
 import { WageListOfStaffComponent } from './components/user-menus/wage-list-of-staff/wage-list-of-staff.component';
 import { PortalComponent } from './components/portal.component';
 import { PermissionComponent } from './components/main-nav/sidevar/admin-button/permission/permission.component';
+import { ScheduleComponent } from './components/main-nav/sidevar/admin-button/schedule/schedule.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
       {
         path: 'permission-detail',
         component: PermissionDetailComponent,
+      },
+      {
+        path: 'schedule',
+        component: ScheduleComponent,
       },
       {
         path: 'wagelist',

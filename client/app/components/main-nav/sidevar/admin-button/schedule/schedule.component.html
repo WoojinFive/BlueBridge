@@ -1,0 +1,48 @@
+<body>
+    <div class="header">
+      <h2 mat-h2>Admin Only - Schedule Request List</h2>
+    </div>
+  
+    <div class="user-list">
+      <mat-form-field>
+        <mat-label>New schedule requested list</mat-label>
+        <mat-select (selectionChange)="selected($event)" class="selection-list">
+          <mat-option *ngFor="let schedule of schedules" [value]="schedule._id">
+            {{ schedule.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="onView()">View</button>
+    </div>
+  
+    <br><br><br><mat-divider></mat-divider>
+  
+    <div *ngIf="viewable">
+      <mat-card class="view-card">
+        <p>_id: <b>{{ selectedId }}</b></p>
+        <p>Type: <b>{{ selectedSchedule[0].type }}</b></p>
+        <p>Start Date: <b>{{ selectedSchedule[0].startDate | date: 'mediumDate'}}</b></p>
+        <p>End Date: <b>{{ selectedSchedule[0].endDate | date: 'mediumDate'}}</b></p>
+        <p>Start Date: <b>{{ selectedSchedule[0].title }}</b></p>
+        <p>Description: <b>{{ selectedSchedule[0].description}}</b></p>
+  
+        <br><p class="person-info"><b>Requested Person:</b></p>
+        <p>Full Name: <b>{{ requestedPerson[0].personalInfo.firstName }} {{ requestedPerson[0].personalInfo.lastName }}</b></p>
+        <p>Department: <b>{{ requestedPerson[0].employeeInfo.department }}</b></p>
+        <p>Job Title: <b>{{ requestedPerson[0].employeeInfo.position }}</b></p>
+        <br>
+
+        <p>Do you want to approve this request? If you decline, this request will be removed.</p>
+  
+
+        <br>
+        <button mat-raised-button color="primary" (click)="onApprove()" class="approve-btn">Approve</button>
+
+        <button mat-raised-button color="accent" (click)="onDecline()">Decline</button>
+  
+  
+      </mat-card>
+    </div>
+  </body>
+  

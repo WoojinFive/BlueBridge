@@ -88,27 +88,29 @@ export class CalendarMainComponent implements OnInit {
     const schedules = this.ScheduleService.getSchedules();
 
     schedules.map(schedule => {
-     let setColor;
-     let editedSchedule;
-     let setType;
-
-     if (String(schedule.type) === "event") { setColor = colors.yellow, setType = "Event", this.isEvent = true; }
-     else if (String(schedule.type) === "meeting") setColor = colors.red, setType = "Meeting", this.isEvent = false;
-     else if (String(schedule.type) === "vacation") setColor = colors.blue, setType = "Vacation", this.isEvent = false;
-     
-
-     editedSchedule = {
-       title: schedule.title,
-       description: schedule.description,
-       color: setColor,
-       start: new Date(schedule.startDate),
-       end: new Date(schedule.endDate),
-       user: schedule.user,
-       type: setType,
-       isEvent: this.isEvent
+     if(schedule.isApproved) {
+      let setColor;
+      let editedSchedule;
+      let setType;
+ 
+      if (String(schedule.type) === "event") { setColor = colors.yellow, setType = "Event", this.isEvent = true; }
+      else if (String(schedule.type) === "meeting") setColor = colors.red, setType = "Meeting", this.isEvent = false;
+      else if (String(schedule.type) === "vacation") setColor = colors.blue, setType = "Vacation", this.isEvent = false;
+      
+ 
+      editedSchedule = {
+        title: schedule.title,
+        description: schedule.description,
+        color: setColor,
+        start: new Date(schedule.startDate),
+        end: new Date(schedule.endDate),
+        user: schedule.user,
+        type: setType,
+        isEvent: this.isEvent
+      }
+ 
+      this.events.push(editedSchedule);
      }
-
-     this.events.push(editedSchedule);
      return this.isLoading = false;
 
     })
