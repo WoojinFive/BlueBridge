@@ -6,14 +6,14 @@ import { Subject } from 'rxjs';
 import { Work } from './work.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WorkService {
   workChanged = new Subject<Work>();
   public work: Work = {
     date: null,
     workStartTime: null,
-    workFinishTime: null
+    workFinishTime: null,
   };
 
   constructor() {}
@@ -23,17 +23,11 @@ export class WorkService {
     this.workChanged.next(this.work);
   }
 
-  startWork() {
-    const date = new Date();
-    const currentDateTime = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    ).toISOString();
-    const currentDate = moment(date).format('YYYY-MM-DD');
-
+  startWork(currentDateTime, currentDate) {
     this.work = {
       ...this.work,
       date: currentDate,
-      workStartTime: currentDateTime
+      workStartTime: currentDateTime,
     };
 
     this.setWork(this.work);

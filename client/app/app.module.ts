@@ -61,6 +61,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userinfo.component';
 import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
 import { HomeFeedEditComponent } from './components/home/home-feed/home-feed-edit/home-feed-edit.component';
+import { StartWorkLogDialog } from './components/home/home-feed/home-dialog.component';
 
 @NgModule({
   declarations: [
@@ -107,8 +108,13 @@ import { HomeFeedEditComponent } from './components/home/home-feed/home-feed-edi
     UserinfoComponent,
     StatusChangeComponent,
     HomeFeedEditComponent,
+    StartWorkLogDialog,
   ],
-  entryComponents: [ScheduleDetailDialog, HomeFeedEditComponent],
+  entryComponents: [
+    ScheduleDetailDialog,
+    HomeFeedEditComponent,
+    StartWorkLogDialog,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

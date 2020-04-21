@@ -28,7 +28,8 @@
       <span class="spacer"></span>
       <div *ngIf="!(isXSmall$ | async)">
         <span class="work-hour margin-right-15"
-          >Hello Woojin, You've been working today for 4hr 30min</span
+          >Hello {{ userData['firstName'] }}, You've been working today for
+          {{ diffHours }}hr {{ diffMinutes }}min</span
         >
       </div>
       <button mat-icon-button [matMenuTriggerFor]="menu">

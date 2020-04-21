@@ -9,9 +9,14 @@ import { UserService } from './../../../shared/user.service';
 import { HomeFeed } from './home-feed.model';
 import { User } from '../../../shared/user.model';
 
+import { HomeFeedEditComponent } from './home-feed-edit/home-feed-edit.component';
+
 import { MatDialog } from '@angular/material/dialog';
 
-import { HomeFeedEditComponent } from './home-feed-edit/home-feed-edit.component';
+import { StartWorkLogDialog } from './home-dialog.component';
+import { WorkService } from 'client/app/shared/work.service';
+
+import moment from 'moment';
 
 @Component({
   selector: 'app-home-feed',
@@ -19,8 +24,12 @@ import { HomeFeedEditComponent } from './home-feed-edit/home-feed-edit.component
   styleUrls: ['./home-feed.component.css'],
 })
 export class HomeFeedComponent implements OnInit, OnDestroy {
+  currentUser: any;
   users: User[];
   feeds: HomeFeed[];
+
+  currentDate: string;
+
   subscription: Subscription;
   subscriptionUser: Subscription;
   isOwnFeed: boolean;
@@ -33,10 +42,17 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
     private dataStorageService: DataStorageService,
     private homeService: HomeService,
     private userService: UserService,
+    private workService: WorkService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    const date = new Date();
+    this.currentDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString();
+    const currentDateString = moment(this.currentDate).format('YYYY-MM-DD');
+
     // fetch users
     this.dataStorageService.fetchUsers().subscribe();
     this.subscriptionUser = this.userService.usersChanged.subscribe(
@@ -82,6 +98,45 @@ export class HomeFeedComponent implements OnInit, OnDestroy {
             this.isLoading = false;
           }
         );
+
+        // work time logging
+        this.currentUser = this.users.filter(
+          (user) => user._id === this.currentUserData.userID
+        )[0];
+
+        const isLogged = this.currentUser.workInfo.workTime.filter(
+          (work) => moment(work.date).format('YYYY-MM-DD') === currentDateString
+        )[0];
+
+        if (!isLogged) {
+          const startWorkLogDialogRef = this.dialog.open(StartWorkLogDialog, {
+            width: '350px',
+            data: {
+              name: this.currentUser.personalInfo.firstName,
+              date: this.currentDate,
+            },
+            disableClose: true,
+          });
+
+          startWorkLogDialogRef.afterClosed().subscribe((result) => {
+            const updatedWorkTime = this.currentUser.workInfo.workTime.slice();
+            updatedWorkTime.push({
+              date: `${currentDateString} 00:00:00`,
+              workStartTime: result,
+              workFinishTime: '2020-04-11T20:40:21.761Z',
+            });
+
+            this.currentUser = {
+              ...this.currentUser,
+              workInfo: {
+                ...this.currentUser.workInfo,
+                workTime: updatedWorkTime,
+              },
+            };
+
+            this.dataStorageService.updateUsers(this.currentUser);
+          });
+        }
       }
     );
   }
