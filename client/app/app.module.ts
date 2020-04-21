@@ -110,6 +110,7 @@ import { ScheduleComponent } from './components/main-nav/sidevar/admin-button/sc
     StatusChangeComponent,
     HomeFeedEditComponent,
     StartWorkLogDialog,
+    ScheduleComponent,
   ],
   entryComponents: [
     ScheduleDetailDialog,
