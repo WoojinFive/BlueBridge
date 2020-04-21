@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>
+    Do you want to start your work?
+  </p>
+  <p>
+    Start Time : {{data.date | date: 'medium'}}
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.date" cdkFocusInitial>
+    Ok
+  </button>
+</div>
