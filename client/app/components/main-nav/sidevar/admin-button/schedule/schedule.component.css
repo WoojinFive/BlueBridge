@@ -22,3 +22,13 @@
       margin: 0;
       text-align: center;
   }
+
+  .person-info {
+      color: red;
+  }
+
+  .approve-btn {
+      margin-right: 5px;
+  }
+
+  

@@ -1,92 +1,48 @@
-<div class="header">
-  <h2 mat-h2>List of new user requests</h2>
-</div>
+<body>
+  <div class="header">
+    <h2 mat-h2>Admin Only - New User Requests</h2>
+  </div>
 
-<div class="table-area">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox
-          (change)="$event ? masterToggle() : null"
-          [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()"
-          [aria-label]="checkboxLabel()"
-        >
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox
-          (click)="$event.stopPropagation()"
-          (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)"
-          [aria-label]="checkboxLabel(row)"
-        >
-        </mat-checkbox>
-      </td>
-    </ng-container>
+  <div class="user-list">
+    <mat-form-field>
+      <mat-label>New requested User List</mat-label>
+      <mat-select (selectionChange)="selected($event)" class="selection-list">
+        <mat-option *ngFor="let user of users" [value]="user._id">
+          {{user.personalInfo.firstName}} {{user.personalInfo.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <!-- Avatar Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <div mat-card-avatar></div>
-      </td>
-    </ng-container>
+    <button mat-raised-button color="primary" (click)="onView()">View</button>
+  </div>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
+  <br><br><br><mat-divider></mat-divider>
 
-    <!-- Department Column -->
-    <ng-container matColumnDef="department">
-      <th mat-header-cell *matHeaderCellDef width="20%">Department</th>
-      <td mat-cell *matCellDef="let element">
-        <mat-select>
-          <mat-option
-            *ngFor="let department of departments"
-            [value]="department.value"
-          >
-            {{ department.viewValue }}
-          </mat-option>
-        </mat-select>
-      </td>
-    </ng-container>
+  <div *ngIf="viewable">
+    <mat-card class="view-card">
+      <p>_id: <b>{{ selectedId }}</b></p>
+      <p>First Name: <b>{{ selectedPerson[0].personalInfo.firstName }}</b></p>
+      <p>Last Name: <b>{{ selectedPerson[0].personalInfo.lastName }}</b></p>
+      <p>Email: <b>{{ selectedPerson[0].personalInfo.email }}</b></p>
 
-    <!-- Job Title Column -->
-    <ng-container matColumnDef="job_title">
-      <th mat-header-cell *matHeaderCellDef>Job Title</th>
-      <td mat-cell *matCellDef="let element">
-        <div class="job-title-area">
-          <mat-form-field>
-            <mat-label>Enter job title</mat-label>
-            <input matInput placeholder="" />
-          </mat-form-field>
-        </div>
-      </td>
-    </ng-container>
+      <br><p>Please enter this person's department and position.</p>
+      <br>
 
-    <!-- Chat Column -->
-    <ng-container matColumnDef="chat">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary">Accept</button>
-      </td>
-    </ng-container>
+      <form (ngSubmit)="onApprove(f)" #f="ngForm">
+        <mat-form-field class="text-field">
+          <mat-label>Department</mat-label>
+          <input matInput [(ngModel)]="input_department" name="input_department" placeholder="Enter Department name">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="text-field">
+          <mat-label>Job Title</mat-label>
+          <input matInput [(ngModel)]="input_jobTitle" name="input_jobTitle" placeholder="Enter Job title">
+        </mat-form-field>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      (click)="selection.toggle(row)"
-    ></tr>
-  </table>
-</div>
+        <p><button mat-raised-button color="primary" type="submit">Accept</button></p>
+      </form>
 
-<div class="button-area">
-  <button mat-raised-button color="primary" class="mat-button-2">
-    Accept all selected people
-  </button>
-</div>
+
+    </mat-card>
+  </div>
+</body>

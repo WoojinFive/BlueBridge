@@ -7,6 +7,8 @@ export class User {
     public password: string,
     public firstName: string,
     public lastName: string,
-    public isLogin: boolean
+    public isLogin: boolean,
+    public isApproved: boolean,
+    public condition: string
   ) {}
 }

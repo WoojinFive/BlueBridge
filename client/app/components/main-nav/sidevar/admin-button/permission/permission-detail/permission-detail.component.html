@@ -3,7 +3,7 @@
 
     <div class="header">
         <h3>You have selected</h3>
-        <h1>{{ name }}</h1>
+        <h1>{{ data.name }}</h1>
     </div>
     
     <div class="role-list">
@@ -36,26 +36,40 @@
 
     <div class="given-role">
         
-        <h2>All roles '{{ name }}' has</h2>
+        <h2>All roles '{{ data.name }}' has</h2>
 
         <mat-card>
 
-            <mat-selection-list #list [(ngModel)]="selectedRoleValue" name="namelist">
+            <div
+                        fxLayout="row wrap"
+                        fxLayoutAlign="start start"
+                        *ngFor="let role of roleList; let i = index"
+                        index="i">
+                        <div fxFlex="85%">
+                        <p>{{ role }}</p>
+                        </div>
+                        <div fxFlex="15%" class="remove-button">
+                           <i class="material-icons" (click)="onDiscard(i)" color="accent">cancel</i>
+                        </div>
+                    </div>
+
+            <!-- <mat-selection-list #list [(ngModel)]="selectedRoleValue" name="namelist">
                 <mat-list-option *ngFor="let namelist of roleNameList" [value]="namelist">
                   {{namelist}}
                 </mat-list-option>
-            </mat-selection-list>
+            </mat-selection-list> -->
         </mat-card>
 
 
         <div
             class="role-button-section">
-
-                  <button mat-raised-button color="accent" (click)="onDeleteRole($event)">Discard</button>
-
-
-                  <button mat-raised-button color="primary">Apply</button>
+                  <button mat-raised-button color="primary" [mat-dialog-close]="data" class="apply-btn">Apply</button>
         </div>
+
+        <br><br><mat-divider></mat-divider><br>
+        <button mat-raised-button color="accent" (click)="onNoClick()" class="cancel-btn">
+            CANCEL
+        </button>
 
     </div>
 

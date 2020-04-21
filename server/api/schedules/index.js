@@ -20,6 +20,20 @@ router.get("/", controller.listAllSchedules);
  */
 router.post("/", controller.createSchedule);
 
+/**
+ * path: /api/schedules
+ * method: PUT
+ * function: updateSchedule() in the schedules.controller.js file
+ */
+router.put('/', controller.updateSchedule);
+
+/**
+ * path: /api/schedules
+ * method: DELETE
+ * function: create() in the schedules.controller.js file
+ */
+router.delete("/:id", controller.deleteSchedule);
+
 // We export the routes to the express app, in the routes.js file we will assign the base URL for this endpoint.
 // in this file we simply want to specify the path after the base /api/users url.
 module.exports = router;

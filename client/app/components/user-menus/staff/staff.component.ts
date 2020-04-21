@@ -69,17 +69,20 @@ export class StaffComponent implements OnInit {
   ngOnInit(): void { 
     this.users = this.UserSerivce.getUsers();
       this.users.map((user, index) => {
-        let customStaff = {
-          position: index,
-          name: user.personalInfo.firstName + ' ' + user.personalInfo.lastName,
-          department: user.employeeInfo.department,
-          job_title: user.employeeInfo.position,
-          picture: user.personalInfo.picture,
-          isLogin: user.isLogin,
-          chat: true
+        if(user.isApproved) {
+          let customStaff = {
+            position: index,
+            name: user.personalInfo.firstName + ' ' + user.personalInfo.lastName,
+            department: user.employeeInfo.department,
+            job_title: user.employeeInfo.position,
+            picture: user.personalInfo.picture,
+            isLogin: user.isLogin,
+            chat: true
+          }
+    
+          this.ELEMENT_DATA.push(customStaff);
         }
-  
-        this.ELEMENT_DATA.push(customStaff);
+
       })
 
     this.dataSource.paginator = this.paginator;

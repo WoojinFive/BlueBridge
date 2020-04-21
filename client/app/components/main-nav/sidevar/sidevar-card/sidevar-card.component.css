@@ -37,3 +37,9 @@
 .mat-badge-content {
   background: #4caf50 !important;
 }
+
+p {
+  padding-top: 10px;
+  font-size: 20px;
+  /* font-weight: bold; */
+}

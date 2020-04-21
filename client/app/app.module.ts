@@ -62,6 +62,7 @@ import { UserinfoComponent } from './components/main-nav/sidevar/userinfo/userin
 import { StatusChangeComponent } from './components/main-nav/sidevar/status-change/status-change.component';
 import { HomeFeedEditComponent } from './components/home/home-feed/home-feed-edit/home-feed-edit.component';
 import { StartWorkLogDialog } from './components/home/home-feed/home-dialog.component';
+import { ScheduleComponent } from './components/main-nav/sidevar/admin-button/schedule/schedule.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { StartWorkLogDialog } from './components/home/home-feed/home-dialog.comp
     ScheduleDetailDialog,
     HomeFeedEditComponent,
     StartWorkLogDialog,
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,

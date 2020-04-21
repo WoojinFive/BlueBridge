@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 interface Role {
   value: number;
@@ -12,7 +13,7 @@ interface Role {
 })
 export class PermissionDetailComponent implements OnInit {
   selectedValue: number;
-  selectedRoleValue: string;
+  selectedRoleValue: string[];
   selectedRoleName: string;
 
   roleList: string[] = [];
@@ -26,9 +27,15 @@ export class PermissionDetailComponent implements OnInit {
     {value: 3, viewValue: 'Schedule Manager'}
   ];
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<PermissionDetailComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
   ngOnInit(): void {
+    this.roleList = this.data.employeeInfo.roles;
   }
 
   onAddedRole(selectedItem) {
@@ -40,16 +47,10 @@ export class PermissionDetailComponent implements OnInit {
 
     this.roleList.push(selectedItem);
 
-    // for display
-    let filteredValue = this.roles.filter(ele => ele.value === selectedItem);
-    this.roleNameList.push(filteredValue[0].viewValue);
-
   }
 
-  onDeleteRole(selectedItem) {
-    selectedItem = this.selectedRoleValue;
-    selectedItem.forEach(element => {
-      this.roleNameList.splice(this.roleNameList.findIndex(item => item === element), 1);
-    })
+  onDiscard(index: number) {
+    return this.data.employeeInfo.roles.splice(index, 1) && this.roleList.splice(index, 1);
   }
+
 }
